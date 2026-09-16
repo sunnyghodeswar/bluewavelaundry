@@ -2,7 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preload" as="image" href="./img/hero-pickup.webp" fetchpriority="high">
+<style>
+  html, body, #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; overflow-x: clip; }
+  html, body { overflow-x: clip; }
+</style>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -12,26 +17,52 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; overflow-x: clip; }
   * { box-sizing: border-box; }
   a { color: #1B4FD8; text-decoration: none; }
   a:hover { color: #0B1B2B; }
   input, button { font-family: inherit; }
   html { scroll-behavior: smooth; }
+  img { max-width: 100%; }
+  section[id] { scroll-margin-top: 84px; }
   @keyframes bwRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
   @keyframes bwFade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes bwBob { 0% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1.2deg); } 100% { transform: translateY(0) rotate(-1deg); } }
   @keyframes bwPop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
-  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  @keyframes bwNavShadow { from { box-shadow: none; } to { box-shadow: 0 6px 22px rgba(11,27,43,0.08); } }
+  .bw-nav {
+    animation: bwNavShadow linear both;
+    animation-timeline: scroll();
+    animation-range: 0 72px;
+  }
+  .reveal {
+    animation: bwRise .75s ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 38%;
+  }
+  .reveal-card:nth-child(1) { animation-delay: 0ms; }
+  .reveal-card:nth-child(2) { animation-delay: 70ms; }
+  .reveal-card:nth-child(3) { animation-delay: 140ms; }
+  .reveal-card:nth-child(4) { animation-delay: 210ms; }
+  @supports not (animation-timeline: view()) {
+    .reveal { animation: bwRise .7s ease-out both; }
+    .bw-nav { animation: none; }
+  }
+  @media (hover: none) {
+    .bw-nav { backdrop-filter: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
 </style>
-<script src="./image-slot.js"></script>
 </helmet>
 <div style="font-family: Figtree,system-ui,sans-serif; color: #0B1B2B; background: #FFFFFF; line-height: 2; font-size: 16px">
 
-  <header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid #EAECEF;box-shadow:{{ navShadow }};transition:box-shadow .25s ease">
-    <div style="max-width:1320px;margin:0 auto;padding:{{ navPad }};display:flex;align-items:center;gap:clamp(10px,2vw,24px);justify-content:space-between;transition:padding .25s ease">
+  <header class="bw-nav" style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid #EAECEF">
+    <div style="max-width:1320px;margin:0 auto;padding:12px clamp(20px,4vw,32px);display:flex;align-items:center;gap:clamp(10px,2vw,24px);justify-content:space-between">
       <a href="#top" style="display:flex;align-items:center;flex:none">
-        <img src="./trans-mu2nz7ak-d6hp.png" alt="Blue Wave Laundry" width="4638" height="758" style="display:block;height:auto;width:{{ navLogoW }};aspect-ratio:4638 / 758;transition:width .25s ease">
+        <img src="./img/logo.webp" alt="Blue Wave Laundry" width="480" height="78" decoding="async" style="display:block;height:auto;width:clamp(128px,13vw,176px);aspect-ratio:480 / 78">
       </a>
       <nav style="display:{{ navLinksDisplay }};gap:clamp(2px,0.4vw,4px);font-size:14.5px;font-weight:500;line-height:1.4;color:#4A5866;align-items:center;white-space:nowrap;background:#F4F6F8;border:1px solid #EAECEF;border-radius:100px;padding:5px;flex:none;overflow:hidden;flex-wrap:nowrap">
         <a href="#services" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Services</a>
@@ -68,7 +99,7 @@
     </svg>
   </template>
 
-  <section style="max-width: 1320px; margin: 0 auto; padding: clamp(48px,6vw,72px) clamp(20px,4vw,32px) clamp(64px,7vw,88px); display: grid; grid-template-columns: repeat(auto-fit,minmax(340px,1fr)); gap: 56px; align-items: center; position: relative">
+  <section style="max-width: 1320px; margin: 0 auto; padding: clamp(48px,6vw,72px) clamp(20px,4vw,32px) clamp(64px,7vw,88px); display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: 56px; align-items: center; position: relative">
     <div>
       <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1B4FD8;background:#F0F4FF;padding:6px 12px;border-radius:100px;margin-bottom:22px;line-height:1.4;animation:bwRise .6s .05s both ease-out">Serving <span>{{ city }}</span></div>
       <h1 style="font-size: clamp(34px,5.5vw,56px); line-height: 1.05; letter-spacing: -0.035em; font-weight: 700; margin: 0 0 18px; text-wrap: balance; animation: bwRise .7s .12s both ease-out"><span style="font-weight: normal;">Get your </span><br>Weekends <span style="font-weight: normal;">back.</span></h1>
@@ -78,28 +109,28 @@
         <div style="display:grid;grid-template-columns:{{ tileCols }};gap:clamp(7px,1vw,12px)">
           <button onClick="{{ tFold.toggle }}" style="text-align:center;background:{{ tFold.bg }};border:1px solid {{ tFold.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0;background-color:#C2DDFC">
-              <img src="./screenshot-2026-09-15-at-3-31-07-pm-mu2i4te6-j868.png" alt="Wash &amp; Fold" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <img src="./img/tile-fold.webp" alt="Wash &amp; Fold" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tFold.dotBorder }};background:{{ tFold.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tFold.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tFold.labelWeight }}">Wash &amp; Fold</div>
           </button>
           <button onClick="{{ tIron.toggle }}" style="text-align:center;background:{{ tIron.bg }};border:1px solid {{ tIron.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
-              <img src="./screenshot-2026-09-15-at-3-30-26-pm-mu2i3y4a-b6ms.png" alt="Wash &amp; Iron" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <img src="./img/tile-iron.webp" alt="Wash &amp; Iron" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tIron.dotBorder }};background:{{ tIron.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tIron.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tIron.labelWeight }}">Wash &amp; Iron</div>
           </button>
           <button onClick="{{ tDry.toggle }}" style="text-align:center;background:{{ tDry.bg }};border:1px solid {{ tDry.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
-              <img src="./screenshot-2026-09-15-at-3-29-43-pm-mu2i342q-ifjf.png" alt="Dry Cleaning" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <img src="./img/tile-dry.webp" alt="Dry Cleaning" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tDry.dotBorder }};background:{{ tDry.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tDry.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tDry.labelWeight }}">Dry Cleaning</div>
           </button>
           <button onClick="{{ tShoe.toggle }}" style="text-align:center;background:{{ tShoe.bg }};border:1px solid {{ tShoe.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
-              <img src="./screenshot-2026-09-15-at-3-32-27-pm-mu2i6jqi-parb.png" alt="Shoes Wash" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <img src="./img/tile-shoes.webp" alt="Shoes Wash" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tShoe.dotBorder }};background:{{ tShoe.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tShoe.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tShoe.labelWeight }}">Shoes Wash</div>
@@ -134,17 +165,17 @@
     </div>
     <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:1.12fr 0.88fr;gap:14px;aspect-ratio:1/1.02;width:100%;min-width:0">
       <div style="grid-row:span 2;position:relative;min-width:0;min-height:0;overflow:hidden">
-        <image-slot id="bw-hero-1" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: pickup at the door" src="./chatgpt-image-sep-15-2026-06_58_57-pm-mu2pk7gd-gxcg.png"></image-slot>
+        <img src="./img/hero-pickup.webp" alt="Doorstep laundry pickup" width="1400" height="2993" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px">
       </div>
       <div style="position:relative;min-width:0;min-height:0;overflow:hidden;transition:transform .35s ease-out" style-hover="transform:scale(1.02)">
-        <image-slot id="bw-hero-2" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: steam pressing" src="./chatgpt-image-sep-15-2026-02_43_53-pm-mu2gg4ps-s0kk.png"></image-slot>
+        <img src="./img/hero-clean.webp" alt="Quality-checked laundry" width="900" height="669" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px">
       </div>
       <div style="position:relative;min-width:0;min-height:0;overflow:hidden;transition:transform .35s ease-out" style-hover="transform:scale(1.02)">
-        <image-slot id="bw-hero-3" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: folded stack" src="./chatgpt-image-sep-15-2026-02_41_19-pm-mu2gd3yx-i7d1.png"></image-slot>
+        <img src="./img/hero-fold.webp" alt="Freshly folded clothes" width="900" height="669" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px">
       </div>
     </div>
-  </section><section id="services" style="border-top:1px solid #EAECEF;background:#FBFCFD">
-    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+  </section>  <section id="services" style="border-top:1px solid #EAECEF;background:#FBFCFD">
+    <div class="reveal" style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:30px">
         <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0">Our services</h2>
         <span style="font-size:14.5px;color:#6B7885">Select one or more, we'll confirm on pickup</span>
@@ -167,35 +198,35 @@
 
   <section id="how" style="border-top:1px solid #EAECEF">
     <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
-      <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 34px">How it works</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
-        <div>
-          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
-            <image-slot id="bw-how-1" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: booking on phone" src="./chatgpt-image-sep-15-2026-04_23_24-pm-mu2k028e-jxng.png"></image-slot>
+      <h2 class="reveal" style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 34px">How it works</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:20px">
+        <div class="reveal reveal-card">
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF">
+            <img src="./img/how-book.webp" alt="Booking a pickup on the phone" width="900" height="669" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           </div>
           <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">01 · BOOK</div>
           <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Book</div>
           <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">Choose a service and a 2-hour pickup slot. Takes under a minute.</p>
         </div>
-        <div>
-          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
-            <image-slot id="bw-how-2" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: pickup at the door" src="./chatgpt-image-sep-15-2026-04_35_29-pm-mu2kg06z-4azg.png"></image-slot>
+        <div class="reveal reveal-card">
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF">
+            <img src="./img/how-pickup.webp" alt="Pickup at the door" width="900" height="669" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           </div>
           <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">02 · PICKUP</div>
           <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Pickup</div>
           <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">We collect from your door, weigh and tag every item in front of you.</p>
         </div>
-        <div>
-          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
-            <image-slot id="bw-how-3" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: washing/pressing" src="./chatgpt-image-sep-15-2026-02_43_53-pm-mu2gg4ps-s0kk.png"></image-slot>
+        <div class="reveal reveal-card">
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF">
+            <img src="./img/hero-clean.webp" alt="Washing and pressing" width="900" height="669" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           </div>
           <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">03 · CLEAN</div>
           <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Clean</div>
           <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">Sorted by fabric and colour, washed in your own load, then pressed.</p>
         </div>
-        <div>
-          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
-            <img src="./chatgpt-image-sep-15-2026-04_03_14-pm-mu2jadb7-hpci.png" alt="chatgpt-image-sep-15-2026-04_03_14-pm" width="1454" height="1082" style="max-width: 100%; height: auto; display: block; object-fit: cover; width: 1454px; aspect-ratio: 1454 / 1082"><image-slot id="bw-how-4" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: folded delivery" src="./chatgpt-image-sep-15-2026-04_03_14-pm-mu2jafcv-15w0.png"></image-slot>
+        <div class="reveal reveal-card">
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF">
+            <img src="./img/how-deliver.webp" alt="Folded laundry delivered" width="900" height="669" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
           </div>
           <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">04 · DELIVER</div>
           <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Deliver</div>
@@ -208,7 +239,7 @@
   <section id="trust" style="background:#fff">
     <div style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,32px) clamp(64px,7vw,88px)">
     <div style="background:#0B1B2B;color:#fff;border-radius:22px">
-    <div style="padding:clamp(52px,6vw,76px) clamp(28px,3.6vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:clamp(40px,4.5vw,64px)">
+    <div class="reveal" style="padding:clamp(52px,6vw,76px) clamp(28px,3.6vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:clamp(40px,4.5vw,64px)">
       <div>
         <h2 style="font-size:clamp(30px,3.8vw,44px);font-weight:700;letter-spacing:-0.035em;margin:0 0 30px;color:#fff;max-width:16ch;line-height:1.1;text-wrap:balance">Your clothes come back the way you like them.</h2>
         <div style="display:flex;flex-direction:column;gap:26px">
@@ -249,7 +280,7 @@
   </section>
 
   <section id="pricing">
-    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+    <div class="reveal" style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:30px">
         <div><h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0">Straightforward pricing</h2><div style="font-size:13.5px;color:#6B7885;margin-top:7px">Clear pricing · No surprise charges</div></div>
         <button onClick="{{ toggleAll }}" aria-expanded="{{ showAll }}" aria-controls="rate-card" style="font-size:14.5px;font-weight:600;color:#1B4FD8;background:none;border:0;padding:8px 0;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:gap .15s" style-hover="gap:11px" style-focus="outline:2px solid #1B4FD8;outline-offset:3px">{{ allLabel }}<span>{{ allArrow }}</span></button>
@@ -290,7 +321,7 @@
             <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.02em;margin:0">Full rate card</h3>
             <span style="font-size:13.5px;color:#6B7885">Hinjewadi, Pune · all prices in ₹</span>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px;align-items:start">
             <div style="display:flex;flex-direction:column;gap:20px">
             <div style="background:#fff;border:1px solid #E7EAEE;border-radius:14px;padding:20px 22px;transition:box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.07);transform:translateY(-2px)">
               <div style="font-size:12.5px;font-weight:700;letter-spacing:0.07em;color:#1B4FD8;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid #E7EAEE">DRY CLEANING · PER PIECE</div>
@@ -343,7 +374,7 @@
   </section>
 
   <section id="plans" style="border-top:1px solid #EAECEF;background:#FBFCFD;scroll-margin-top:90px;overflow:hidden">
-    <div style="max-width: 1320px; margin: 0 auto; padding: clamp(64px,7vw,88px) clamp(20px,4vw,32px); position: relative">
+    <div class="reveal" style="max-width: 1320px; margin: 0 auto; padding: clamp(64px,7vw,88px) clamp(20px,4vw,32px); position: relative">
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px">
         <div>
           <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 8px">Monthly plans</h2>
@@ -351,7 +382,7 @@
         </div>
         
       </div>
-<div style="width: 164px; height: 126px; flex: none; border-radius: 8px; background: url('./chatgpt-image-sep-15-2026-07_12_34-pm-mu2q3ecj-fvdk.png') center/cover no-repeat; display: {{ mascotDisplay }}; position: absolute; top: 109px; right: 0; transform-origin: bottom center; animation: bwBob 3.6s ease-in-out infinite"></div>
+<div style="width: 164px; height: 126px; flex: none; border-radius: 8px; background: url('./img/mascot.webp') center/cover no-repeat; display: {{ mascotDisplay }}; position: absolute; top: 109px; right: 0; transform-origin: bottom center; animation: bwBob 3.6s ease-in-out infinite"></div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
         <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
           <div style="background: #fff; border: 1px solid #E4E8EC; border-radius: 12px; padding: 26px 24px; display: flex; flex-direction: column; box-shadow: {{ p.ring }}; transition: box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.08);transform:translateY(-3px)">
@@ -382,9 +413,9 @@
   </section>
 
   <section style="border-top: 1px solid #EAECEF">
-    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+    <div class="reveal" style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
       <div style="position:relative;border-radius:16px;overflow:hidden;min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center">
-        <img src="./chatgpt-image-sep-14-2026-06_59_09-pm-mu1a5s1e-25th.png" alt="Blue Wave pickup" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+        <img src="./img/cta-pickup.webp" alt="Blue Wave pickup" width="1600" height="533" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
         <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,18,30,0.35) 0%,rgba(7,18,30,0.78) 100%)"></div>
         <div style="position:relative;padding:64px 28px;max-width:720px">
           <h2 style="font-size:clamp(30px,4.4vw,44px);font-weight:800;letter-spacing:-0.035em;line-height:1.08;margin:0 0 14px;color:#fff;text-wrap:balance">Book your next pickup</h2>
@@ -402,7 +433,7 @@
     <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,5vw,64px) clamp(20px,4vw,32px) 0">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px 32px;padding:0 0 clamp(36px,4vw,48px);font-size:14px;color:#6B7885">
         <div style="display:flex;flex-direction:column;gap:12px;grid-column:span 2;min-width:0">
-          <img src="./trans-mu2nz7ak-d6hp.png" alt="Blue Wave Laundry" width="4638" height="758" style="display:block;height:auto;width:min(200px,100%);aspect-ratio:4638 / 758">
+          <img src="./img/logo.webp" alt="Blue Wave Laundry" width="480" height="78" loading="lazy" decoding="async" style="display:block;height:auto;width:min(200px,100%);aspect-ratio:480 / 78">
           <div style="line-height:1.65;max-width:34ch">Doorstep laundry and dry cleaning, washed and quality-checked by our own team.</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px">
@@ -448,29 +479,26 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;city&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Hinjewadi, Wakad, Baner&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;turnaround&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;48 hours&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+91 70305 68910&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconFold&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconIron&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconDry&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconSteam&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./cute-rounded-3d-object-mtssrqnz-p7ia.jpg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;}}">
 class Component extends DCLogic {
-  state = { sel: [], pin: "", pinNote: "", plan: null, showAll: false, scrolled: false, menu: false, narrow: false, mobile: false };
+  state = { sel: [], pin: "", pinNote: "", plan: null, showAll: false, menu: false, narrow: false, mobile: false };
 
   componentDidMount() {
-    this._onScroll = () => {
-      const s = window.scrollY > 12;
-      if (s !== this.state.scrolled) this.setState({ scrolled: s });
-    };
+    this._mqN = window.matchMedia("(max-width: 1059px)");
+    this._mqM = window.matchMedia("(max-width: 639px)");
     this._onResize = () => {
-      const n = window.innerWidth < 1060;
-      const m = window.innerWidth < 640;
+      const n = this._mqN.matches;
+      const m = this._mqM.matches;
       if (n !== this.state.narrow || m !== this.state.mobile) {
         this.setState({ narrow: n, mobile: m, menu: n ? this.state.menu : false });
       }
     };
-    window.addEventListener("scroll", this._onScroll, { passive: true });
-    window.addEventListener("resize", this._onResize);
-    this._onScroll();
+    this._mqN.addEventListener("change", this._onResize);
+    this._mqM.addEventListener("change", this._onResize);
     this._onResize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this._onScroll);
-    window.removeEventListener("resize", this._onResize);
+    this._mqN.removeEventListener("change", this._onResize);
+    this._mqM.removeEventListener("change", this._onResize);
   }
 
   toggle(id) {
@@ -568,9 +596,6 @@ class Component extends DCLogic {
       waHref: "https://wa.me/917030568910?text=" + encodeURIComponent(sel.length ? "Hi Blue Wave, I'd like to book a free pickup for: " + sel.join(", ") + "." : "Hi Blue Wave, I'd like to book a free pickup."),
       nextSlot: "today",
       services, plans, tiles,
-      navPad: this.state.scrolled ? "6px clamp(20px,4vw,32px)" : "14px clamp(20px,4vw,32px)",
-      navLogoW: this.state.scrolled ? "clamp(116px,12vw,160px)" : "clamp(132px,14vw,200px)",
-      navShadow: this.state.scrolled ? "0 6px 22px rgba(11,27,43,0.08)" : "none",
       navLinksDisplay: this.state.narrow ? "none" : "flex",
       navPhoneDisplay: this.state.narrow ? "none" : "inline-flex",
       navBurgerDisplay: this.state.narrow ? "inline-flex" : "none",
