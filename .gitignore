@@ -1,0 +1,4 @@
+.DS_Store
+.vercel
+.image-slots.state.json
+*.log

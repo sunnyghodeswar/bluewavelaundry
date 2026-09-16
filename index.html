@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  * { box-sizing: border-box; }
+  a { color: #1B4FD8; text-decoration: none; }
+  a:hover { color: #0B1B2B; }
+  input, button { font-family: inherit; }
+  html { scroll-behavior: smooth; }
+  @keyframes bwRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @keyframes bwFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes bwBob { 0% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1.2deg); } 100% { transform: translateY(0) rotate(-1deg); } }
+  @keyframes bwPop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div style="font-family: Figtree,system-ui,sans-serif; color: #0B1B2B; background: #FFFFFF; line-height: 2; font-size: 16px">
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);border-bottom:1px solid #EAECEF;box-shadow:{{ navShadow }};transition:box-shadow .25s ease">
+    <div style="max-width:1320px;margin:0 auto;padding:{{ navPad }};display:flex;align-items:center;gap:clamp(10px,2vw,24px);justify-content:space-between;transition:padding .25s ease">
+      <a href="#top" style="display:flex;align-items:center;flex:none">
+        <img src="./trans-mu2nz7ak-d6hp.png" alt="Blue Wave Laundry" width="4638" height="758" style="display:block;height:auto;width:{{ navLogoW }};aspect-ratio:4638 / 758;transition:width .25s ease">
+      </a>
+      <nav style="display:{{ navLinksDisplay }};gap:clamp(2px,0.4vw,4px);font-size:14.5px;font-weight:500;line-height:1.4;color:#4A5866;align-items:center;white-space:nowrap;background:#F4F6F8;border:1px solid #EAECEF;border-radius:100px;padding:5px;flex:none;overflow:hidden;flex-wrap:nowrap">
+        <a href="#services" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Services</a>
+        <a href="#pricing" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Pricing</a>
+        <a href="#how" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">How it works</a>
+        <a href="#trust" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Trust</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);flex:none;justify-content:flex-end">
+        
+        <a href="{{ telHref }}" style="display: {{ navPhoneDisplay }}; font-size: 14.5px; font-weight: 600; color: #0B1B2B; white-space: nowrap; align-items: center; gap: 7px; left: 950px; top: 24px; z-index: 0" style-hover="color:#1B4FD8"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5z"></path></svg>{{ phone }}</a><a href="{{ waHref }}" target="_blank" rel="noopener" style="color: #fff; font-size: 14.5px; font-weight: 600; padding: 13px 22px; border-radius: 10px; background: #1B4FD8; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: background .15s,gap .15s; width: 190px; height: 44px" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)" style-focus="outline:2px solid #0B1B2B;outline-offset:2px">Book a free pickup<span>→</span></a>
+        <button onClick="{{ toggleMenu }}" aria-label="Menu" aria-expanded="{{ menuOpen }}" style="display:{{ navBurgerDisplay }};width:44px;height:44px;flex:none;border:1px solid #E1E5EA;background:#fff;border-radius:100px;cursor:pointer;align-items:center;justify-content:center;color:#0B1B2B;transition:border-color .18s" style-hover="border-color:#1B4FD8" type="button">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="{{ burgerPath }}"></path></svg>
+        </button>
+      </div>
+    </div>
+    <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,32px) 14px;animation:bwRise .28s both ease-out"><div style="background:#fff;border:1px solid #E7EAEE;border-radius:18px;box-shadow:0 12px 34px rgba(11,27,43,0.1);padding:10px">
+        <a href="#services" onClick="{{ closeMenu }}" style="display:block;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#0B1B2B;min-height:44px" style-hover="background:#F0F4FF">Services</a>
+        <a href="#pricing" onClick="{{ closeMenu }}" style="display:block;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#0B1B2B;min-height:44px" style-hover="background:#F0F4FF">Pricing</a>
+        <a href="#how" onClick="{{ closeMenu }}" style="display:block;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#0B1B2B;min-height:44px" style-hover="background:#F0F4FF">How it works</a>
+        <a href="#trust" onClick="{{ closeMenu }}" style="display:block;padding:15px 18px;border-radius:14px;font-size:16px;font-weight:600;color:#0B1B2B;min-height:44px" style-hover="background:#F0F4FF">Trust</a>
+        <a href="{{ telHref }}" style="display:flex;align-items:center;gap:9px;margin-top:6px;padding:15px 18px;border-top:1px solid #EFF1F4;font-size:16px;font-weight:600;color:#0B1B2B;min-height:44px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5z"></path></svg>{{ phone }}</a>
+      </div></div>
+    </sc-if>
+  </header>
+
+  
+
+  <template id="__bundler_thumbnail" data-bg-color="#ffffff">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="200" fill="#ffffff"></rect>
+      <text x="100" y="85" font-size="48" font-weight="700" text-anchor="middle" fill="#1B4FD8" font-family="system-ui">BW</text>
+      <text x="100" y="130" font-size="16" text-anchor="middle" fill="#6B7885" font-family="system-ui">Laundry</text>
+    </svg>
+  </template>
+
+  <section style="max-width: 1320px; margin: 0 auto; padding: clamp(48px,6vw,72px) clamp(20px,4vw,32px) clamp(64px,7vw,88px); display: grid; grid-template-columns: repeat(auto-fit,minmax(340px,1fr)); gap: 56px; align-items: center; position: relative">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#1B4FD8;background:#F0F4FF;padding:6px 12px;border-radius:100px;margin-bottom:22px;line-height:1.4;animation:bwRise .6s .05s both ease-out">Serving <span>{{ city }}</span></div>
+      <h1 style="font-size: clamp(34px,5.5vw,56px); line-height: 1.05; letter-spacing: -0.035em; font-weight: 700; margin: 0 0 18px; text-wrap: balance; animation: bwRise .7s .12s both ease-out"><span style="font-weight: normal;">Get your </span><br>Weekends <span style="font-weight: normal;">back.</span></h1>
+      <p style="font-size: 16px; line-height: 1.55; color: #4A5866; margin: 0 0 30px; max-width: 460px; animation: bwRise .7s .2s both ease-out">Washed, pressed and quality-checked by our laundry team.</p>
+      <div id="book" style="border:1px solid #E4E8EC;border-radius:18px;padding:clamp(14px,1.6vw,20px);max-width:600px;box-shadow:0 1px 3px rgba(11,27,43,0.04);animation:bwRise .75s .28s both ease-out;transition:box-shadow .25s" style-hover="box-shadow:0 6px 24px rgba(11,27,43,0.08)">
+        <div style="font-size:15px;font-weight:600;margin-bottom:14px">What do you need cleaned?</div>
+        <div style="display:grid;grid-template-columns:{{ tileCols }};gap:clamp(7px,1vw,12px)">
+          <button onClick="{{ tFold.toggle }}" style="text-align:center;background:{{ tFold.bg }};border:1px solid {{ tFold.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+            <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0;background-color:#C2DDFC">
+              <img src="./screenshot-2026-09-15-at-3-31-07-pm-mu2i4te6-j868.png" alt="Wash &amp; Fold" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tFold.dotBorder }};background:{{ tFold.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tFold.tick }}</span>
+            </div>
+            <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tFold.labelWeight }}">Wash &amp; Fold</div>
+          </button>
+          <button onClick="{{ tIron.toggle }}" style="text-align:center;background:{{ tIron.bg }};border:1px solid {{ tIron.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+            <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
+              <img src="./screenshot-2026-09-15-at-3-30-26-pm-mu2i3y4a-b6ms.png" alt="Wash &amp; Iron" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tIron.dotBorder }};background:{{ tIron.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tIron.tick }}</span>
+            </div>
+            <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tIron.labelWeight }}">Wash &amp; Iron</div>
+          </button>
+          <button onClick="{{ tDry.toggle }}" style="text-align:center;background:{{ tDry.bg }};border:1px solid {{ tDry.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+            <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
+              <img src="./screenshot-2026-09-15-at-3-29-43-pm-mu2i342q-ifjf.png" alt="Dry Cleaning" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tDry.dotBorder }};background:{{ tDry.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tDry.tick }}</span>
+            </div>
+            <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tDry.labelWeight }}">Dry Cleaning</div>
+          </button>
+          <button onClick="{{ tShoe.toggle }}" style="text-align:center;background:{{ tShoe.bg }};border:1px solid {{ tShoe.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+            <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
+              <img src="./screenshot-2026-09-15-at-3-32-27-pm-mu2i6jqi-parb.png" alt="Shoes Wash" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+              <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tShoe.dotBorder }};background:{{ tShoe.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tShoe.tick }}</span>
+            </div>
+            <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tShoe.labelWeight }}">Shoes Wash</div>
+          </button>
+        </div><a href="{{ waHref }}" target="_blank" rel="noopener" style="width: 100%; margin-top: 18px; color: #fff; font-size: 16px; font-weight: 600; padding: 16px 24px; border-radius: 11px; cursor: pointer; min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 6px; box-sizing: border-box; transition: background .15s,gap .15s; background-color: #1B4FD8" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)" style-focus="outline:2px solid #0B1B2B;outline-offset:2px">{{ heroCta }}<span>→</span></a>
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;margin-top:12px;font-size:13px;color:#6B7885">
+          <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:100px;background:#12A150;flex:none"></span>Open today · 9 AM–9 PM</span>
+          <span>Next pickup · Today · 6–8 PM</span>
+          <span>No payment required at booking</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ trustCols }};margin-top:34px;padding-top:26px;border-top:1px solid #EAECEF;max-width:600px">
+        <div style="display:flex;align-items:center;justify-content:{{ trustJustify }};padding:{{ trustPad1 }}">
+          <div>
+            <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2">Faster</div>
+            <div style="font-size:13px;color:#6B7885;margin-top:3px">Turnaround Time</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:{{ trustJustify }};padding:{{ trustPad2 }};border-left:{{ trustBorderL }};border-top:{{ trustBorderT }}">
+          <div>
+            <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2">Free</div>
+            <div style="font-size:13px;color:#6B7885;margin-top:3px">Pickup &amp; delivery</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:{{ trustJustify }};padding:{{ trustPad3 }};border-left:{{ trustBorderL }};border-top:{{ trustBorderT }}">
+          <div>
+            <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2">7 Days</div>
+            <div style="font-size:13px;color:#6B7885;margin-top:3px">Open every day</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:1.12fr 0.88fr;gap:14px;aspect-ratio:1/1.02;width:100%;min-width:0">
+      <div style="grid-row:span 2;position:relative;min-width:0;min-height:0;overflow:hidden">
+        <image-slot id="bw-hero-1" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: pickup at the door" src="./chatgpt-image-sep-15-2026-06_58_57-pm-mu2pk7gd-gxcg.png"></image-slot>
+      </div>
+      <div style="position:relative;min-width:0;min-height:0;overflow:hidden;transition:transform .35s ease-out" style-hover="transform:scale(1.02)">
+        <image-slot id="bw-hero-2" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: steam pressing" src="./chatgpt-image-sep-15-2026-02_43_53-pm-mu2gg4ps-s0kk.png"></image-slot>
+      </div>
+      <div style="position:relative;min-width:0;min-height:0;overflow:hidden;transition:transform .35s ease-out" style-hover="transform:scale(1.02)">
+        <image-slot id="bw-hero-3" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: folded stack" src="./chatgpt-image-sep-15-2026-02_41_19-pm-mu2gd3yx-i7d1.png"></image-slot>
+      </div>
+    </div>
+  </section><section id="services" style="border-top:1px solid #EAECEF;background:#FBFCFD">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:30px">
+        <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0">Our services</h2>
+        <span style="font-size:14.5px;color:#6B7885">Select one or more, we'll confirm on pickup</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="4">
+          <button onClick="{{ s.toggle }}" style="text-align:left;background:#fff;border:1px solid #E4E8EC;border-radius:16px;padding:24px 22px;cursor:pointer;display:flex;flex-direction:column;gap:0;box-shadow:{{ s.ring }};transition:border-color .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 8px 22px rgba(11,27,43,0.09);transform:translateY(-4px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:100px;white-space:nowrap;color:{{ s.tagInk }};background:{{ s.tagBg }};border:1px solid {{ s.tagLine }}">{{ s.tagIcon }}{{ s.tag }}</span>
+              <div style="width:20px;height:20px;flex:none;border-radius:6px;border:1.5px solid #C7D0DA;display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;font-weight:700;background:{{ s.dot }};border-color:{{ s.dotBorder }}">{{ s.tick }}</div>
+            </div>
+            <div style="font-size:17px;font-weight:700;letter-spacing:-0.015em;margin-bottom:5px">{{ s.name }}</div>
+            <div style="font-size:14px;line-height:1.45;color:#6B7885;margin-bottom:16px">{{ s.desc }}</div>
+            <div style="font-size:15px;font-weight:600;margin-top:auto">{{ s.price }} <span style="font-weight:500;color:#6B7885">{{ s.unit }}</span></div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="border-top:1px solid #EAECEF">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+      <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 34px">How it works</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+        <div>
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
+            <image-slot id="bw-how-1" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: booking on phone" src="./chatgpt-image-sep-15-2026-04_23_24-pm-mu2k028e-jxng.png"></image-slot>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">01 · BOOK</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Book</div>
+          <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">Choose a service and a 2-hour pickup slot. Takes under a minute.</p>
+        </div>
+        <div>
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
+            <image-slot id="bw-how-2" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: pickup at the door" src="./chatgpt-image-sep-15-2026-04_35_29-pm-mu2kg06z-4azg.png"></image-slot>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">02 · PICKUP</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Pickup</div>
+          <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">We collect from your door, weigh and tag every item in front of you.</p>
+        </div>
+        <div>
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
+            <image-slot id="bw-how-3" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: washing/pressing" src="./chatgpt-image-sep-15-2026-02_43_53-pm-mu2gg4ps-s0kk.png"></image-slot>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">03 · CLEAN</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Clean</div>
+          <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">Sorted by fabric and colour, washed in your own load, then pressed.</p>
+        </div>
+        <div>
+          <div style="aspect-ratio:4/3;border-radius:14px;overflow:hidden;position:relative;background:#F0F4FF;transition:transform .35s ease-out,box-shadow .35s" style-hover="transform:translateY(-4px);box-shadow:0 10px 26px rgba(11,27,43,0.10)">
+            <img src="./chatgpt-image-sep-15-2026-04_03_14-pm-mu2jadb7-hpci.png" alt="chatgpt-image-sep-15-2026-04_03_14-pm" width="1454" height="1082" style="max-width: 100%; height: auto; display: block; object-fit: cover; width: 1454px; aspect-ratio: 1454 / 1082"><image-slot id="bw-how-4" radius="14" style="position:absolute;inset:0;width:100%;height:100%" placeholder="Drop: folded delivery" src="./chatgpt-image-sep-15-2026-04_03_14-pm-mu2jafcv-15w0.png"></image-slot>
+          </div>
+          <div style="font-size:13px;font-weight:700;color:#1B4FD8;letter-spacing:0.08em;margin:14px 0 6px">04 · DELIVER</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;margin-bottom:5px">Deliver</div>
+          <p style="font-size:14.5px;line-height:1.5;color:#6B7885;margin:0">Back folded. Pay after delivery. Your clean<br>clothes at your doorstep.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust" style="background:#fff">
+    <div style="max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,32px) clamp(64px,7vw,88px)">
+    <div style="background:#0B1B2B;color:#fff;border-radius:22px">
+    <div style="padding:clamp(52px,6vw,76px) clamp(28px,3.6vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:clamp(40px,4.5vw,64px)">
+      <div>
+        <h2 style="font-size:clamp(30px,3.8vw,44px);font-weight:700;letter-spacing:-0.035em;margin:0 0 30px;color:#fff;max-width:16ch;line-height:1.1;text-wrap:balance">Your clothes come back the way you like them.</h2>
+        <div style="display:flex;flex-direction:column;gap:26px">
+          <div>
+            <div style="font-size:17px;font-weight:600;margin-bottom:5px">Your load, never mixed</div>
+            <div style="font-size:15px;line-height:1.55;color:#A9B6C4;max-width:44ch">Your order is washed on its own cycle, never combined with another household’s.</div>
+          </div>
+          <div>
+            <div style="font-size:17px;font-weight:600;margin-bottom:5px">Two-stage quality check</div>
+            <div style="font-size:15px;line-height:1.55;color:#A9B6C4;max-width:44ch">Every garment is checked twice — after washing and before folding. Stains get re-treated, not returned.</div>
+          </div>
+          <div>
+            <div style="font-size:17px;font-weight:600;margin-bottom:5px">Trained laundry staff, not gig hands</div>
+            <div style="font-size:15px;line-height:1.55;color:#A9B6C4;max-width:44ch">Full-time staff trained on fabric care — silk, wool, linen and structured garments each handled to their own process.</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#12263A;border:1px solid #1E3450;border-radius:16px;padding:clamp(24px,2.4vw,32px)">
+        <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#8FB4FF;margin-bottom:18px">GARMENT ACCOUNTABILITY</div>
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #1E3450;font-size:15px">
+          <span style="color:#C3CEDA">Itemised count, signed at pickup</span><span style="font-weight:600;white-space:nowrap">Every order</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #1E3450;font-size:15px">
+          <span style="color:#C3CEDA">Per-garment tag, pickup to delivery</span><span style="font-weight:600;white-space:nowrap">Every item</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;font-size:15px">
+          <span style="color:#C3CEDA">Rewash if you're not satisfied</span><span style="font-weight:600;white-space:nowrap">Free</span>
+        </div>
+        <div style="margin-top:28px;padding-top:26px;border-top:1px solid #1E3450">
+          <div style="display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:16px"><span style="font-size:12.5px;color:#8FB4FF;letter-spacing:0.08em;font-weight:700">★★★★★ &nbsp;GOOGLE REVIEWS</span><span style="font-size:12.5px;color:#A9B6C4">4.7 · 18 reviews</span></div>
+          <div style="font-size:15px;line-height:1.55;margin-bottom:7px">Great Service and professionals are polite.</div>
+          <div style="font-size:13px;color:#A9B6C4">Aparna Chaurasia</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:30px">
+        <div><h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0">Straightforward pricing</h2><div style="font-size:13.5px;color:#6B7885;margin-top:7px">Clear pricing · No surprise charges</div></div>
+        <button onClick="{{ toggleAll }}" aria-expanded="{{ showAll }}" aria-controls="rate-card" style="font-size:14.5px;font-weight:600;color:#1B4FD8;background:none;border:0;padding:8px 0;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:gap .15s" style-hover="gap:11px" style-focus="outline:2px solid #1B4FD8;outline-offset:3px">{{ allLabel }}<span>{{ allArrow }}</span></button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:40px">
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:#6B7885;margin-bottom:6px">BY WEIGHT</div>
+          <sc-for list="{{ kgRows }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid #EAECEF;font-size:15.5px">
+              <span>{{ r.label }}</span>
+              <span style="font-weight:600;white-space:nowrap">{{ r.price }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:#1B4FD8;margin-bottom:6px">PRIORITY · WITHIN 24 HRS</div>
+          <sc-for list="{{ priorityRows }}" as="r" hint-placeholder-count="2">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid #EAECEF;font-size:15.5px">
+              <span>{{ r.label }}</span>
+              <span style="font-weight:600;white-space:nowrap">{{ r.price }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;color:#6B7885;margin-bottom:6px">PER GARMENT</div>
+          <sc-for list="{{ pieceRows }}" as="r" hint-placeholder-count="3">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:15px 0;border-bottom:1px solid #EAECEF;font-size:15.5px">
+              <span>{{ r.label }}</span>
+              <span style="font-weight:600;white-space:nowrap">{{ r.price }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="font-size:13.5px;color:#6B7885;margin-top:18px">Free pickup and delivery on orders above ₹300. Below that, a delivery charge applies.</div>
+      <sc-if value="{{ showAll }}" hint-placeholder-val="{{ false }}">
+        <div id="rate-card" style="margin-top:36px;border:1px solid #EAECEF;border-radius:16px;background:#FAFBFC;padding:clamp(20px,3vw,32px)">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px">
+            <h3 style="font-size:19px;font-weight:700;letter-spacing:-0.02em;margin:0">Full rate card</h3>
+            <span style="font-size:13.5px;color:#6B7885">Hinjewadi, Pune · all prices in ₹</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:#fff;border:1px solid #E7EAEE;border-radius:14px;padding:20px 22px;transition:box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.07);transform:translateY(-2px)">
+              <div style="font-size:12.5px;font-weight:700;letter-spacing:0.07em;color:#1B4FD8;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid #E7EAEE">DRY CLEANING · PER PIECE</div>
+              <sc-for list="{{ dryItems }}" as="r" hint-placeholder-count="11">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F1F3F5;font-size:15px;line-height:1.35">
+                  <span style="color:#3C4A58">{{ r.label }}</span>
+                  <span style="font-weight:600;color:#0B1B2B;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:74px;text-align:right">{{ r.price }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#fff;border:1px solid #E7EAEE;border-radius:14px;padding:20px 22px;transition:box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.07);transform:translateY(-2px)">
+              <div style="font-size:12.5px;font-weight:700;letter-spacing:0.07em;color:#1B4FD8;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid #E7EAEE">BY WEIGHT</div>
+              <sc-for list="{{ weightAll }}" as="r" hint-placeholder-count="4">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F1F3F5;font-size:15px;line-height:1.35">
+                  <span style="color:#3C4A58">{{ r.label }}</span>
+                  <span style="font-weight:600;color:#0B1B2B;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:74px;text-align:right">{{ r.price }}</span>
+                </div>
+              </sc-for>
+            </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:#fff;border:1px solid #E7EAEE;border-radius:14px;padding:20px 22px;transition:box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.07);transform:translateY(-2px)">
+              <div style="font-size:12.5px;font-weight:700;letter-spacing:0.07em;color:#1B4FD8;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid #E7EAEE">HOME &amp; BEDDING · PER PIECE</div>
+              <sc-for list="{{ homeItems }}" as="r" hint-placeholder-count="7">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F1F3F5;font-size:15px;line-height:1.35">
+                  <span style="color:#3C4A58">{{ r.label }}</span>
+                  <span style="font-weight:600;color:#0B1B2B;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:74px;text-align:right">{{ r.price }}</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#fff;border:1px solid #E7EAEE;border-radius:14px;padding:20px 22px;transition:box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.07);transform:translateY(-2px)">
+              <div style="font-size:12.5px;font-weight:700;letter-spacing:0.07em;color:#1B4FD8;padding-bottom:12px;margin-bottom:4px;border-bottom:1px solid #E7EAEE">SHOE CARE · PER PAIR</div>
+              <sc-for list="{{ shoeItems }}" as="r" hint-placeholder-count="4">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:10px 0;border-bottom:1px solid #F1F3F5;font-size:15px;line-height:1.35">
+                  <span style="color:#3C4A58">{{ r.label }}</span>
+                  <span style="font-weight:600;color:#0B1B2B;white-space:nowrap;font-variant-numeric:tabular-nums;min-width:74px;text-align:right">{{ r.price }}</span>
+                </div>
+              </sc-for>
+            </div>
+            </div>
+          </div>
+          <div style="margin-top:22px;font-size:13.5px;line-height:1.55;color:#6B7885;max-width:720px">Per-piece rates are starting prices for standard garments. Heavy embroidery, silk, leather and stain treatment are quoted at pickup. Priority 24-hour service applies to wash services; per-piece work is quoted on request.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:22px">
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:#1B4FD8;color:#fff;font-size:15px;font-weight:600;padding:13px 24px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,gap .15s" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)">Book a free pickup<span>→</span></a>
+            <a href="#plans" style="border:1px solid #D7DBE0;color:#0B1B2B;font-size:15px;font-weight:600;padding:13px 24px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s,gap .15s" style-hover="border-color:#0B1B2B;gap:10px">See monthly plans<span>→</span></a>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="plans" style="border-top:1px solid #EAECEF;background:#FBFCFD;scroll-margin-top:90px;overflow:hidden">
+    <div style="max-width: 1320px; margin: 0 auto; padding: clamp(64px,7vw,88px) clamp(20px,4vw,32px); position: relative">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:32px">
+        <div>
+          <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 8px">Monthly plans</h2>
+          <p style="font-size:16.5px;color:#6B7885;margin:0;max-width:560px">Wash &amp; Iron, billed monthly instead of per kg. Pause or cancel any week.</p>
+        </div>
+        
+      </div>
+<div style="width: 164px; height: 126px; flex: none; border-radius: 8px; background: url('./chatgpt-image-sep-15-2026-07_12_34-pm-mu2q3ecj-fvdk.png') center/cover no-repeat; display: {{ mascotDisplay }}; position: absolute; top: 109px; right: 0; transform-origin: bottom center; animation: bwBob 3.6s ease-in-out infinite"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+        <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+          <div style="background: #fff; border: 1px solid #E4E8EC; border-radius: 12px; padding: 26px 24px; display: flex; flex-direction: column; box-shadow: {{ p.ring }}; transition: box-shadow .22s,transform .22s" style-hover="box-shadow:0 8px 22px rgba(11,27,43,0.08);transform:translateY(-3px)">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:100px;white-space:nowrap;color:{{ p.tagInk }};background:{{ p.tagBg }};border:1px solid {{ p.tagLine }}">{{ p.tagIcon }}{{ p.tag }}</span>
+            </div>
+            <div style="font-size:16px;font-weight:700;letter-spacing:-0.015em">{{ p.name }}</div>
+            <div style="font-size: 16px; color: #6B7885; margin-top: 4px">{{ p.load }}</div>
+            <div style="font-size:34px;font-weight:800;letter-spacing:-0.035em;margin:20px 0 2px">{{ p.price }}</div>
+            <div style="font-size:13.5px;color:#6B7885;margin-bottom:20px">{{ p.per }}</div>
+            <button onClick="{{ p.choose }}" style="border:1px solid #1B4FD8;background:{{ p.btnBg }};color:{{ p.btnFg }};font-size:14.5px;font-weight:600;padding:12px;border-radius:9px;cursor:pointer;margin-top:auto">{{ p.cta }}</button>
+          </div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ planPicked }}" hint-placeholder-val="{{ true }}">
+        <div style="margin-top:20px;border:1px solid #D8E2FB;background:#F7F9FF;border-radius:14px;padding:18px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between">
+          <div style="min-width:0">
+            <div style="font-size:15.5px;font-weight:700;letter-spacing:-0.015em">{{ planSummary }}</div>
+            <div style="font-size:13.5px;color:#6B7885;margin-top:3px">{{ planDetail }}</div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <a href="{{ planWaHref }}" target="_blank" rel="noopener" style="background:#1B4FD8;color:#fff;font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,gap .15s" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)">Start this plan<span>→</span></a>
+            <button onClick="{{ clearPlan }}" style="border:1px solid #D7DBE0;background:#fff;color:#0B1B2B;font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:10px;cursor:pointer;transition:border-color .15s" style-hover="border-color:#0B1B2B">Change plan</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="border-top: 1px solid #EAECEF">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
+      <div style="position:relative;border-radius:16px;overflow:hidden;min-height:420px;display:flex;align-items:center;justify-content:center;text-align:center">
+        <img src="./chatgpt-image-sep-14-2026-06_59_09-pm-mu1a5s1e-25th.png" alt="Blue Wave pickup" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,18,30,0.35) 0%,rgba(7,18,30,0.78) 100%)"></div>
+        <div style="position:relative;padding:64px 28px;max-width:720px">
+          <h2 style="font-size:clamp(30px,4.4vw,44px);font-weight:800;letter-spacing:-0.035em;line-height:1.08;margin:0 0 14px;color:#fff;text-wrap:balance">Book your next pickup</h2>
+          <p style="font-size:17.5px;line-height:1.5;color:#FFFFFF;margin:0 0 28px">Choose a convenient 2-hour slot. Pay after your clothes come back.</p>
+          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:#1B4FD8;color:#fff;font-size:16px;font-weight:600;padding:15px 30px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:background .15s,gap .15s" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)">Book a free pickup<span>→</span></a>
+            <a href="{{ waHref }}" target="_blank" rel="noopener" style="border:1px solid rgba(255,255,255,0.6);color:#fff;font-size:16px;font-weight:600;padding:15px 30px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;transition:border-color .15s,gap .15s" style-hover="border-color:#fff;gap:10px" style-active="transform:translateY(1px)">Chat on WhatsApp<span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid #EAECEF;background:#FBFCFD">
+    <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,5vw,64px) clamp(20px,4vw,32px) 0">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px 32px;padding:0 0 clamp(36px,4vw,48px);font-size:14px;color:#6B7885">
+        <div style="display:flex;flex-direction:column;gap:12px;grid-column:span 2;min-width:0">
+          <img src="./trans-mu2nz7ak-d6hp.png" alt="Blue Wave Laundry" width="4638" height="758" style="display:block;height:auto;width:min(200px,100%);aspect-ratio:4638 / 758">
+          <div style="line-height:1.65;max-width:34ch">Doorstep laundry and dry cleaning, washed and quality-checked by our own team.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#0B1B2B">EXPLORE</div>
+          <a href="#services" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">Services</a>
+          <a href="#pricing" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">Pricing</a>
+          <a href="#how" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">How it works</a>
+          <a href="#trust" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">Trust &amp; care</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#0B1B2B">CONTACT</div>
+          <a href="{{ telHref }}" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">{{ phone }}</a>
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">WhatsApp</a>
+          <span>Mon–Sun, 9 AM–9 PM</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#0B1B2B">SERVICE AREA</div>
+          <span>Hinjewadi</span>
+          <span>Wakad</span>
+          <span>Baner</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between;padding:20px 0 {{ footerBottomPad }};border-top:1px solid #EAECEF;font-size:13px;color:#8C98A4">
+        <span>© 2026 Blue Wave Laundry</span>
+        <span>Free pickup and delivery on orders above ₹300</span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" style="position:fixed;right:18px;bottom:{{ waFloatBottom }};z-index:49;display:{{ waFloatDisplay }};width:52px;height:52px;border-radius:100px;background:#fff;border:1px solid #E1E5EA;box-shadow:0 6px 20px rgba(11,27,43,0.14);align-items:center;justify-content:center;color:#12A150;transition:transform .2s,box-shadow .2s" style-hover="transform:translateY(-2px);box-shadow:0 10px 26px rgba(11,27,43,0.18)" style-active="transform:translateY(0)">
+    <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2A9.7 9.7 0 0 0 3.6 16.8L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2zm0 1.9a7.8 7.8 0 1 1-4 14.5l-.4-.2-2.8.7.8-2.7-.2-.4A7.8 7.8 0 0 1 12 4.1zm-3.4 4c-.2 0-.5.1-.7.4-.3.3-.8.9-.8 1.9s.8 2.1 1 2.3c.1.2 1.5 2.4 3.7 3.3 1.9.7 2.3.6 2.7.6.5 0 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3l-1.5-.7c-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.2-.1-.9-.3-1.7-1.1-.6-.6-1-1.2-1.1-1.4-.1-.2 0-.3.1-.4l.4-.5c.1-.2.1-.3 0-.5l-.6-1.5c-.2-.4-.3-.4-.5-.4h-.4z"></path></svg>
+  </a>
+
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:50;display:{{ barDisplay }};background:#0B1B2B;color:#fff">
+    <div style="max-width:1320px;margin:0 auto;padding:12px clamp(16px,4vw,32px);display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px">
+      <div style="font-size:14.5px;font-weight:600;margin-right:auto;min-width:0">{{ barLabel }}</div>
+      <button onClick="{{ clearSel }}" style="background:none;border:0;color:#A9B6C4;font-size:14px;cursor:pointer">Clear</button>
+      <a href="{{ waHref }}" target="_blank" rel="noopener" style="background:#1B4FD8;color:#fff;font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;flex:{{ barCtaFlex }};transition:background .15s,gap .15s" style-hover="background:#173FAE;gap:10px" style-active="background:#12328C;transform:translateY(1px)">Book a free pickup<span>→</span></a>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;city&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Hinjewadi, Wakad, Baner&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;turnaround&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;48 hours&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+91 70305 68910&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;iconFold&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconIron&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconDry&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;},&quot;iconSteam&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;./cute-rounded-3d-object-mtssrqnz-p7ia.jpg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Service icons&quot;}}">
+class Component extends DCLogic {
+  state = { sel: [], pin: "", pinNote: "", plan: null, showAll: false, scrolled: false, menu: false, narrow: false, mobile: false };
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const s = window.scrollY > 12;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    this._onResize = () => {
+      const n = window.innerWidth < 1060;
+      const m = window.innerWidth < 640;
+      if (n !== this.state.narrow || m !== this.state.mobile) {
+        this.setState({ narrow: n, mobile: m, menu: n ? this.state.menu : false });
+      }
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    window.addEventListener("resize", this._onResize);
+    this._onScroll();
+    this._onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this._onScroll);
+    window.removeEventListener("resize", this._onResize);
+  }
+
+  toggle(id) {
+    this.setState(s => ({ sel: s.sel.includes(id) ? s.sel.filter(x => x !== id) : s.sel.concat(id) }));
+  }
+
+  renderVals() {
+    const city = this.props.city ?? "Hinjewadi, Wakad, Baner";
+    const turnaround = this.props.turnaround ?? "Faster";
+    const defs = [
+      { id: "fold", name: "Wash & Fold", desc: "Everyday clothes, washed and neatly folded.", price: "₹79", unit: "/ kg", tag: "BEST VALUE" },
+      { id: "iron", name: "Wash & Iron", desc: "Washed, steam-pressed and returned on hangers.", price: "₹109", unit: "/ kg", popular: true, tag: "MOST POPULAR" },
+      { id: "dry", name: "Dry Cleaning", desc: "Suits, sarees, woollens and delicate fabrics.", price: "From ₹99", unit: "/ piece", tag: "SPECIALIST CARE" },
+      { id: "steam", name: "Shoes Wash", desc: "Sneakers and everyday shoes, deep-cleaned and deodorised.", price: "From ₹199", unit: "/ pair", tag: "PER PAIR" }
+    ];
+    const sel = defs.filter(d => this.state.sel.includes(d.id)).map(d => d.name);
+    const services = defs.map(d => {      const on = this.state.sel.includes(d.id);
+      return Object.assign({}, d, {
+        toggle: () => this.toggle(d.id),
+        ring: on ? "0 0 0 2px #1B4FD8" : "none",
+        dot: on ? "#1B4FD8" : "transparent",
+        dotBorder: on ? "#1B4FD8" : "#C7D0DA",
+        tick: on ? "✓" : "",
+        tagIcon: React.createElement("svg", { width: 12, height: 12, viewBox: "0 0 24 24", fill: d.id === "iron" ? "currentColor" : "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", style: { flex: "none" }, "aria-hidden": "true" },
+          React.createElement("path", { key: "p", d: {
+            iron: "M12 3.2l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.4l5.9-.8z",
+            fold: "M12 2.6l8.4 4.2v10.4L12 21.4 3.6 17.2V6.8z M3.6 6.8L12 11l8.4-4.2 M12 11v10.4",
+            dry: "M12 3.4c2.6 3 4.6 5.4 4.6 8.2A4.6 4.6 0 0 1 12 16.2a4.6 4.6 0 0 1-4.6-4.6c0-2.8 2-5.2 4.6-8.2z M6.5 19.6c1.8 1 3.6 1 5.5 0 1.9 1 3.7 1 5.5 0",
+            steam: "M3.2 15.8h12l3.6-3.6a2.2 2.2 0 0 1 3 3l-2.6 2.6H3.2z M3.2 15.8V11l4.6 1.4M8.6 12.6l2.4-3.4"
+          }[d.id] })),
+        selRing: on ? "0 0 0 3px rgba(27,79,216,0.14)" : "none",
+        tagInk: { fold: "#0E7C66", iron: "#1B4FD8", dry: "#7A4BC4", steam: "#B25A12" }[d.id],
+        tagBg: { fold: "#EAF7F2", iron: "#F0F4FF", dry: "#F5F0FE", steam: "#FDF3E8" }[d.id],
+        tagLine: { fold: "#CBE9DF", iron: "#D8E2FB", dry: "#E4D9FA", steam: "#F6E0C4" }[d.id]
+      });
+    });
+
+    const badges = { fold: "48 hrs", iron: "48 hrs", dry: "72 hrs", steam: "72 hrs" };
+    const icons = {
+      fold: this.props.iconFold ?? "./uploads/Fresh Folded Laundry Basket.png",
+      iron: this.props.iconIron ?? "./uploads/Freshly Ironed Clothes and Steam Iron-cd181b8c.png",
+      dry: this.props.iconDry ?? "./uploads/Freshly Pressed Shirts on a Gleaming Rack.png",
+      steam: this.props.iconSteam ?? "./uploads/Sparkling Clean Sneakers with Foam Brush-458d56af.png"
+    };
+    const tiles = defs.map(d => {
+      const on = this.state.sel.includes(d.id);
+      return {
+        name: d.name, badge: badges[d.id],
+        slotId: "bw-tile-" + d.id,
+        src: icons[d.id],
+        toggle: () => this.toggle(d.id),
+        ring: on ? "0 0 0 2px #1B4FD8" : "none",
+        bd: on ? "#1B4FD8" : "#E4E8EC",
+        bg: on ? "#F0F4FF" : "#FFFFFF",
+        labelWeight: on ? 600 : 500,
+        dot: on ? "#1B4FD8" : "rgba(255,255,255,0.92)",
+        dotBorder: on ? "#1B4FD8" : "#C7D0DA",
+        tick: on ? "✓" : ""
+      };
+    });
+
+    const n = this.state.sel.length;
+    const names = defs.filter(d => this.state.sel.includes(d.id)).map(d => d.name).join(" + ");
+
+    const planDefs = [
+      { id: "s", name: "Single", load: "Up to 6 kg a month", price: "₹599", per: "≈ ₹100 / kg · saves ₹55 a month", tag: "FOR ONE" },
+      { id: "h", name: "Household", load: "Up to 12 kg a month", price: "₹999", per: "≈ ₹83 / kg · saves ₹309 a month", popular: true, tag: "MOST POPULAR" },
+      { id: "f", name: "Family+", load: "Up to 20 kg a month", price: "₹1,699", per: "≈ ₹85 / kg · saves ₹481 a month", tag: "2 PICKUPS A WEEK" }
+    ];
+    const chosen = planDefs.find(p => p.id === this.state.plan);
+    const plans = planDefs.map(p => {
+      const on = this.state.plan === p.id;
+      return Object.assign({}, p, {
+        choose: () => this.setState({ plan: on ? null : p.id }),
+        ring: on ? "0 0 0 2px #1B4FD8" : "none",
+        btnBg: on ? "#1B4FD8" : "#fff",
+        btnFg: on ? "#fff" : "#1B4FD8",
+        cta: on ? "Selected" : "Choose plan",
+        tagInk: { s: "#0E7C66", h: "#1B4FD8", f: "#7A4BC4" }[p.id],
+        tagBg: { s: "#EAF7F2", h: "#F0F4FF", f: "#F5F0FE" }[p.id],
+        tagLine: { s: "#CBE9DF", h: "#D8E2FB", f: "#E4D9FA" }[p.id],
+        tagIcon: React.createElement("svg", { width: 12, height: 12, viewBox: "0 0 24 24", fill: p.id === "h" ? "currentColor" : "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", style: { flex: "none" }, "aria-hidden": "true" },
+          React.createElement("path", { key: "p", d: {
+            s: "M12 12.4a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4.8 20.2c0-3.4 3.2-5.6 7.2-5.6s7.2 2.2 7.2 5.6",
+            h: "M12 3.2l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.4l5.9-.8z",
+            f: "M20.5 7.5l-8.5 12.8L3.5 7.5 7 3.7h10z M7 3.7l5 3.8 5-3.8 M3.5 7.5h17"
+          }[p.id] }))
+      });
+    });
+
+    return {
+      city, turnaround,
+      phone: this.props.phone ?? "+91 70305 68910",
+      telHref: "tel:+917030568910",
+      waHref: "https://wa.me/917030568910?text=" + encodeURIComponent(sel.length ? "Hi Blue Wave, I'd like to book a free pickup for: " + sel.join(", ") + "." : "Hi Blue Wave, I'd like to book a free pickup."),
+      nextSlot: "today",
+      services, plans, tiles,
+      navPad: this.state.scrolled ? "6px clamp(20px,4vw,32px)" : "14px clamp(20px,4vw,32px)",
+      navLogoW: this.state.scrolled ? "clamp(116px,12vw,160px)" : "clamp(132px,14vw,200px)",
+      navShadow: this.state.scrolled ? "0 6px 22px rgba(11,27,43,0.08)" : "none",
+      navLinksDisplay: this.state.narrow ? "none" : "flex",
+      navPhoneDisplay: this.state.narrow ? "none" : "inline-flex",
+      navBurgerDisplay: this.state.narrow ? "inline-flex" : "none",
+      menuOpen: this.state.menu,
+      burgerPath: this.state.menu ? "M6 6l12 12M18 6L6 18" : "M4 7h16M4 12h16M4 17h16",
+      toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      closeMenu: () => this.setState({ menu: false }),
+      planPicked: !!chosen,
+      planSummary: chosen ? chosen.name + " plan · " + chosen.price + " a month" : "",
+      planDetail: chosen ? chosen.load + " · " + chosen.per : "",
+      planWaHref: "https://wa.me/917030568910?text=" + encodeURIComponent(chosen ? "Hi Blue Wave, I'd like to start the " + chosen.name + " plan (" + chosen.price + " a month, " + chosen.load.toLowerCase() + ")." : ""),
+      clearPlan: () => this.setState({ plan: null }),
+      tFold: tiles[0], tIron: tiles[1], tDry: tiles[2], tShoe: tiles[3],
+      heroCta: sel.length === 1 ? "Book " + sel[0] + " pickup" : "Book a free pickup",
+      scrollBook: () => { const el = document.getElementById("services"); if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" }); },
+      kgRows: [
+        { label: "Wash & Fold", price: "₹79 / kg" },
+        { label: "Wash & Iron", price: "₹109 / kg" }
+      ],
+      priorityRows: [
+        { label: "Wash & Fold, priority", price: "₹119 / kg" },
+        { label: "Wash & Iron, priority", price: "₹149 / kg" }
+      ],
+      showAll: this.state.showAll,
+      allLabel: this.state.showAll ? "Hide full rate card" : "View all pricing",
+      allArrow: this.state.showAll ? "↑" : "↓",
+      toggleAll: () => this.setState(s => ({ showAll: !s.showAll })),
+      dryItems: [
+        { label: "Shirt or T-shirt", price: "₹99" },
+        { label: "Trousers or jeans", price: "₹99" },
+        { label: "Kurta or kurti", price: "₹119" },
+        { label: "Dress, one piece", price: "₹199" },
+        { label: "Saree, plain", price: "₹199" },
+        { label: "Saree, heavy work", price: "₹449" },
+        { label: "Blazer or coat", price: "₹299" },
+        { label: "Suit, two piece", price: "₹449" },
+        { label: "Sweater or sweatshirt", price: "₹179" },
+        { label: "Jacket, padded", price: "₹349" },
+        { label: "Lehenga, three piece", price: "₹699" }
+      ],
+      homeItems: [
+        { label: "Bedsheet, single", price: "₹49" },
+        { label: "Bedsheet, double", price: "₹89" },
+        { label: "Pillow cover", price: "₹49" },
+        { label: "Blanket, single", price: "₹249" },
+        { label: "Blanket, double", price: "₹399" },
+        { label: "Curtain, per panel", price: "₹199" },
+        { label: "Towel, bath", price: "₹79" }
+      ],
+      shoeItems: [
+        { label: "Sneakers, canvas or mesh", price: "₹199" },
+        { label: "Leather shoes", price: "₹299" },
+        { label: "Sandals or flats", price: "₹179" },
+        { label: "Boots", price: "₹349" }
+      ],
+      weightAll: [
+        { label: "Wash & Fold", price: "₹79 / kg" },
+        { label: "Wash & Iron", price: "₹109 / kg" },
+        { label: "Wash & Fold, priority", price: "₹119 / kg" },
+        { label: "Wash & Iron, priority", price: "₹149 / kg" }
+      ],
+      pieceRows: [
+        { label: "Dry Cleaning, per piece", price: "From ₹99" },
+        { label: "Shoes Wash, per pair", price: "From ₹199" }
+      ],
+      pin: this.state.pin,
+      pinNote: this.state.pinNote,
+      onPin: e => this.setState({ pin: e.target.value, pinNote: "" }),
+      onCheck: () => this.setState(s => ({
+        pinNote: s.pin.trim().length >= 6 ? "We pick up in " + s.pin.trim() + " — we'll confirm your slot on WhatsApp." : "Enter a 6-digit pincode to check pickup availability."
+      })),
+      tileCols: this.state.mobile ? "repeat(2,minmax(0,1fr))" : "repeat(4,minmax(0,1fr))",
+      trustCols: this.state.mobile ? "minmax(0,1fr)" : "repeat(3,minmax(0,1fr))",
+      trustJustify: this.state.mobile ? "flex-start" : "center",
+      trustPad1: this.state.mobile ? "0 0 16px" : "0 20px 0 0",
+      trustPad2: this.state.mobile ? "16px 0" : "0 20px",
+      trustPad3: this.state.mobile ? "16px 0 0" : "0 0 0 20px",
+      trustBorderL: this.state.mobile ? "0" : "1px solid #EAECEF",
+      trustBorderT: this.state.mobile ? "1px solid #EAECEF" : "0",
+      mascotDisplay: this.state.narrow ? "none" : "block",
+      barCtaFlex: this.state.mobile ? "1 1 100%" : "none",
+      footerBottomPad: this.state.mobile ? "96px" : "26px",
+      waFloatDisplay: this.state.mobile ? "inline-flex" : "none",
+      waFloatBottom: n ? "86px" : "18px",
+      barDisplay: n ? "block" : "none",
+      barLabel: n ? names + " selected" : "",
+      clearSel: () => this.setState({ sel: [] })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
