@@ -122,7 +122,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  body { margin: 0; background: #FFFFFF; -webkit-font-smoothing: antialiased; overflow-x: clip; position: relative; }
   * { box-sizing: border-box; }
   a { color: #1B4FD8; text-decoration: none; }
   a:hover { color: #0B1B2B; }
@@ -134,6 +134,77 @@
   @keyframes bwFade { from { opacity: 0; } to { opacity: 1; } }
   @keyframes bwBob { 0% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-9px) rotate(1.2deg); } 100% { transform: translateY(0) rotate(-1deg); } }
   @keyframes bwPop { 0% { transform: scale(0.6); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+  @keyframes bwSurf { from { transform: translateX(0); } to { transform: translateX(-150px); } }
+  @keyframes bwSurfB { from { transform: translateX(-150px); } to { transform: translateX(0); } }
+  @keyframes bwBub { 0% { transform: translateY(0) scale(.7); opacity: 0; } 18% { opacity: 1; } 100% { transform: translateY(-84px) scale(1.05); opacity: 0; } }
+  @keyframes bwDrumPop { from { transform: scale(1); opacity: .95; } to { transform: scale(2.1); opacity: 0; } }
+  .plan-machine {
+    background: #fff;
+    border: 1px solid #E4E8EC;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow .22s, transform .22s;
+  }
+  .plan-machine:hover { box-shadow: 0 8px 22px rgba(11,27,43,0.08); transform: translateY(-3px); }
+  .plan-machine.on { box-shadow: 0 0 0 2px #1B4FD8; }
+  .plan-panel {
+    background: #F6F8FA;
+    border-bottom: 1px solid #E4E8EC;
+    padding: 13px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .plan-dials { display: flex; gap: 7px; flex: none; }
+  .plan-dials span { width: 9px; height: 9px; border-radius: 100px; border: 2px solid #CFD6DE; }
+  .plan-body {
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+  }
+  .plan-drum {
+    width: 150px;
+    height: 150px;
+    margin: 20px 0 14px;
+    border-radius: 100px;
+    border: 9px solid #EEF1F5;
+    background: #FBFCFD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-water { position: absolute; inset: 0; overflow: hidden; border-radius: 100px; }
+  .plan-water svg { position: absolute; left: 0; bottom: 0; width: 300px; }
+  .plan-water .back { height: 68px; animation: bwSurfB 7s linear infinite; }
+  .plan-water .front { height: 60px; animation: bwSurf 4.5s linear infinite; }
+  .plan-price { position: relative; font-size: 30px; font-weight: 800; letter-spacing: -0.035em; pointer-events: none; }
+  .plan-drum .bub { position: absolute; bottom: 58px; }
+  .plan-drum .bub > span { display: block; width: 100%; height: 100%; border-radius: 100px; cursor: pointer; }
+  .plan-drum .bub.burst > span { animation: bwDrumPop .4s ease-out forwards !important; }
+  .plan-choose {
+    border: 1px solid #1B4FD8;
+    background: #fff;
+    color: #1B4FD8;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 9px;
+    cursor: pointer;
+    margin-top: auto;
+    width: 100%;
+    transition: background .18s, color .18s;
+  }
+  .plan-choose:hover { background: #F0F4FF; }
+  .plan-machine.on .plan-choose { background: #1B4FD8; color: #fff; }
   @keyframes bwNavShadow { from { box-shadow: inset 0 1px 0 rgba(255,255,255,0.85); } to { box-shadow: 0 8px 28px rgba(11,27,43,0.08), inset 0 1px 0 rgba(255,255,255,0.85); } }
   .bw-nav {
     animation: bwNavShadow linear both;
@@ -277,6 +348,32 @@
     color: #fff;
   }
   .wa-float:hover { color: #fff; background: #20bd5a; }
+  .bubble-layer { display: none !important; }
+  .bw-soaps {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 25;
+  }
+  .bw-soaps i {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+  }
+  .css-bubbles { display: none !important; }
+  #top { position: relative; }
+  @media (prefers-reduced-motion: reduce) {
+    .bubble-layer, .css-bubbles, .bw-soaps { display: none !important; }
+  }
   .float-bar .wa-float,
   .sel-bar .wa-float {
     position: static;
@@ -474,6 +571,7 @@
 </style>
 </helmet>
 <div id="top" style="font-family: Figtree,system-ui,sans-serif; color: #0B1B2B; background: #FFFFFF; line-height: 2; font-size: 16px">
+  <div class="css-bubbles" aria-hidden="true"><i style="left:2.0%;top:3.0%;width:28px;height:28px;animation-duration:18s;animation-delay:-0.0s"></i><i style="left:19.2%;top:14.3%;width:45px;height:45px;animation-duration:25s;animation-delay:-1.9s"></i><i style="left:28.4%;top:25.6%;width:62px;height:62px;animation-duration:32s;animation-delay:-3.8s"></i><i style="left:45.6%;top:36.9%;width:79px;height:79px;animation-duration:23s;animation-delay:-5.7s"></i><i style="left:54.8%;top:48.2%;width:32px;height:32px;animation-duration:30s;animation-delay:-7.6s"></i><i style="left:64.0%;top:59.5%;width:49px;height:49px;animation-duration:21s;animation-delay:-9.5s"></i><i style="left:81.2%;top:70.8%;width:66px;height:66px;animation-duration:28s;animation-delay:-11.4s"></i><i style="left:90.4%;top:82.1%;width:83px;height:83px;animation-duration:19s;animation-delay:-13.3s"></i><i style="left:2.0%;top:93.4%;width:36px;height:36px;animation-duration:26s;animation-delay:-15.2s"></i><i style="left:19.2%;top:12.7%;width:53px;height:53px;animation-duration:33s;animation-delay:-17.1s"></i><i style="left:28.4%;top:24.0%;width:70px;height:70px;animation-duration:24s;animation-delay:-19.0s"></i><i style="left:45.6%;top:35.3%;width:87px;height:87px;animation-duration:31s;animation-delay:-20.9s"></i><i style="left:54.8%;top:46.6%;width:40px;height:40px;animation-duration:22s;animation-delay:-22.8s"></i><i style="left:64.0%;top:57.9%;width:57px;height:57px;animation-duration:29s;animation-delay:-0.7s"></i><i style="left:81.2%;top:69.2%;width:74px;height:74px;animation-duration:20s;animation-delay:-2.6s"></i><i style="left:90.4%;top:80.5%;width:91px;height:91px;animation-duration:27s;animation-delay:-4.5s"></i><i style="left:2.0%;top:91.8%;width:44px;height:44px;animation-duration:18s;animation-delay:-6.4s"></i><i style="left:19.2%;top:11.1%;width:61px;height:61px;animation-duration:25s;animation-delay:-8.3s"></i><i style="left:28.4%;top:22.4%;width:78px;height:78px;animation-duration:32s;animation-delay:-10.2s"></i><i style="left:45.6%;top:33.7%;width:31px;height:31px;animation-duration:23s;animation-delay:-12.1s"></i><i style="left:54.8%;top:45.0%;width:48px;height:48px;animation-duration:30s;animation-delay:-14.0s"></i><i style="left:64.0%;top:56.3%;width:65px;height:65px;animation-duration:21s;animation-delay:-15.9s"></i><i style="left:81.2%;top:67.6%;width:82px;height:82px;animation-duration:28s;animation-delay:-17.8s"></i><i style="left:90.4%;top:78.9%;width:35px;height:35px;animation-duration:19s;animation-delay:-19.7s"></i><i style="left:2.0%;top:90.2%;width:52px;height:52px;animation-duration:26s;animation-delay:-21.6s"></i><i style="left:19.2%;top:9.5%;width:69px;height:69px;animation-duration:33s;animation-delay:-23.5s"></i><i style="left:28.4%;top:20.8%;width:86px;height:86px;animation-duration:24s;animation-delay:-1.4s"></i><i style="left:45.6%;top:32.1%;width:39px;height:39px;animation-duration:31s;animation-delay:-3.3s"></i><i style="left:54.8%;top:43.4%;width:56px;height:56px;animation-duration:22s;animation-delay:-5.2s"></i><i style="left:64.0%;top:54.7%;width:73px;height:73px;animation-duration:29s;animation-delay:-7.1s"></i><i style="left:81.2%;top:66.0%;width:90px;height:90px;animation-duration:20s;animation-delay:-9.0s"></i><i style="left:90.4%;top:77.3%;width:43px;height:43px;animation-duration:27s;animation-delay:-10.9s"></i><i style="left:2.0%;top:88.6%;width:60px;height:60px;animation-duration:18s;animation-delay:-12.8s"></i><i style="left:19.2%;top:7.9%;width:77px;height:77px;animation-duration:25s;animation-delay:-14.7s"></i><i style="left:28.4%;top:19.2%;width:30px;height:30px;animation-duration:32s;animation-delay:-16.6s"></i><i style="left:45.6%;top:30.5%;width:47px;height:47px;animation-duration:23s;animation-delay:-18.5s"></i><i style="left:54.8%;top:41.8%;width:64px;height:64px;animation-duration:30s;animation-delay:-20.4s"></i><i style="left:64.0%;top:53.1%;width:81px;height:81px;animation-duration:21s;animation-delay:-22.3s"></i><i style="left:81.2%;top:64.4%;width:34px;height:34px;animation-duration:28s;animation-delay:-0.2s"></i><i style="left:90.4%;top:75.7%;width:51px;height:51px;animation-duration:19s;animation-delay:-2.1s"></i><i style="left:2.0%;top:87.0%;width:68px;height:68px;animation-duration:26s;animation-delay:-4.0s"></i><i style="left:19.2%;top:6.3%;width:85px;height:85px;animation-duration:33s;animation-delay:-5.9s"></i><i style="left:28.4%;top:17.6%;width:38px;height:38px;animation-duration:24s;animation-delay:-7.8s"></i><i style="left:45.6%;top:28.9%;width:55px;height:55px;animation-duration:31s;animation-delay:-9.7s"></i><i style="left:54.8%;top:40.2%;width:72px;height:72px;animation-duration:22s;animation-delay:-11.6s"></i><i style="left:64.0%;top:51.5%;width:89px;height:89px;animation-duration:29s;animation-delay:-13.5s"></i><i style="left:81.2%;top:62.8%;width:42px;height:42px;animation-duration:20s;animation-delay:-15.4s"></i><i style="left:90.4%;top:74.1%;width:59px;height:59px;animation-duration:27s;animation-delay:-17.3s"></i><i style="left:2.0%;top:85.4%;width:76px;height:76px;animation-duration:18s;animation-delay:-19.2s"></i><i style="left:19.2%;top:4.7%;width:29px;height:29px;animation-duration:25s;animation-delay:-21.1s"></i><i style="left:28.4%;top:16.0%;width:46px;height:46px;animation-duration:32s;animation-delay:-23.0s"></i><i style="left:45.6%;top:27.3%;width:63px;height:63px;animation-duration:23s;animation-delay:-0.9s"></i><i style="left:54.8%;top:38.6%;width:80px;height:80px;animation-duration:30s;animation-delay:-2.8s"></i><i style="left:64.0%;top:49.9%;width:33px;height:33px;animation-duration:21s;animation-delay:-4.7s"></i><i style="left:81.2%;top:61.2%;width:50px;height:50px;animation-duration:28s;animation-delay:-6.6s"></i><i style="left:90.4%;top:72.5%;width:67px;height:67px;animation-duration:19s;animation-delay:-8.5s"></i><i style="left:2.0%;top:83.8%;width:84px;height:84px;animation-duration:26s;animation-delay:-10.4s"></i><i style="left:19.2%;top:3.1%;width:37px;height:37px;animation-duration:33s;animation-delay:-12.3s"></i><i style="left:28.4%;top:14.4%;width:54px;height:54px;animation-duration:24s;animation-delay:-14.2s"></i><i style="left:45.6%;top:25.7%;width:71px;height:71px;animation-duration:31s;animation-delay:-16.1s"></i><i style="left:54.8%;top:37.0%;width:88px;height:88px;animation-duration:22s;animation-delay:-18.0s"></i><i style="left:64.0%;top:48.3%;width:41px;height:41px;animation-duration:29s;animation-delay:-19.9s"></i><i style="left:81.2%;top:59.6%;width:58px;height:58px;animation-duration:20s;animation-delay:-21.8s"></i><i style="left:90.4%;top:70.9%;width:75px;height:75px;animation-duration:27s;animation-delay:-23.7s"></i><i style="left:2.0%;top:82.2%;width:28px;height:28px;animation-duration:18s;animation-delay:-1.6s"></i><i style="left:19.2%;top:93.5%;width:45px;height:45px;animation-duration:25s;animation-delay:-3.5s"></i><i style="left:28.4%;top:12.8%;width:62px;height:62px;animation-duration:32s;animation-delay:-5.4s"></i><i style="left:45.6%;top:24.1%;width:79px;height:79px;animation-duration:23s;animation-delay:-7.3s"></i><i style="left:54.8%;top:35.4%;width:32px;height:32px;animation-duration:30s;animation-delay:-9.2s"></i><i style="left:64.0%;top:46.7%;width:49px;height:49px;animation-duration:21s;animation-delay:-11.1s"></i><i style="left:81.2%;top:58.0%;width:66px;height:66px;animation-duration:28s;animation-delay:-13.0s"></i><i style="left:90.4%;top:69.3%;width:83px;height:83px;animation-duration:19s;animation-delay:-14.9s"></i><i style="left:2.0%;top:80.6%;width:36px;height:36px;animation-duration:26s;animation-delay:-16.8s"></i><i style="left:19.2%;top:91.9%;width:53px;height:53px;animation-duration:33s;animation-delay:-18.7s"></i><i style="left:28.4%;top:11.2%;width:70px;height:70px;animation-duration:24s;animation-delay:-20.6s"></i><i style="left:45.6%;top:22.5%;width:87px;height:87px;animation-duration:31s;animation-delay:-22.5s"></i><i style="left:54.8%;top:33.8%;width:40px;height:40px;animation-duration:22s;animation-delay:-0.4s"></i><i style="left:64.0%;top:45.1%;width:57px;height:57px;animation-duration:29s;animation-delay:-2.3s"></i><i style="left:81.2%;top:56.4%;width:74px;height:74px;animation-duration:20s;animation-delay:-4.2s"></i><i style="left:90.4%;top:67.7%;width:91px;height:91px;animation-duration:27s;animation-delay:-6.1s"></i></div>
 
   <header class="bw-nav" style="position:sticky;top:0;z-index:40">
     <div class="nav-inner" style="max-width:1320px;margin:0 auto;padding:12px clamp(20px,4vw,32px);display:flex;align-items:center;gap:clamp(10px,2vw,24px);justify-content:space-between">
@@ -527,28 +625,28 @@
       <div id="book" style="border:1px solid #E4E8EC;border-radius:18px;padding:clamp(14px,1.6vw,20px);max-width:600px;box-shadow:0 1px 3px rgba(11,27,43,0.04);animation:bwRise .75s .28s both ease-out;transition:box-shadow .25s" style-hover="box-shadow:0 6px 24px rgba(11,27,43,0.08)">
         <div style="font-size:15px;font-weight:600;margin-bottom:14px">What do you need cleaned?</div>
         <div style="display:grid;grid-template-columns:{{ tileCols }};gap:clamp(7px,1vw,12px)">
-          <button onClick="{{ tFold.toggle }}" style="text-align:center;background:{{ tFold.bg }};border:1px solid {{ tFold.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+          <button data-tile="fold" onClick="{{ tFold.toggle }}" style="text-align:center;background:{{ tFold.bg }};border:1px solid {{ tFold.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0;background-color:#C2DDFC">
               <img src="./img/tile-fold.webp" alt="Wash &amp; Fold" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tFold.dotBorder }};background:{{ tFold.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tFold.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tFold.labelWeight }}">Wash &amp; Fold</div>
           </button>
-          <button onClick="{{ tIron.toggle }}" style="text-align:center;background:{{ tIron.bg }};border:1px solid {{ tIron.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+          <button data-tile="iron" onClick="{{ tIron.toggle }}" style="text-align:center;background:{{ tIron.bg }};border:1px solid {{ tIron.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
               <img src="./img/tile-iron.webp" alt="Wash &amp; Iron" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tIron.dotBorder }};background:{{ tIron.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tIron.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tIron.labelWeight }}">Wash &amp; Iron</div>
           </button>
-          <button onClick="{{ tDry.toggle }}" style="text-align:center;background:{{ tDry.bg }};border:1px solid {{ tDry.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+          <button data-tile="dry" onClick="{{ tDry.toggle }}" style="text-align:center;background:{{ tDry.bg }};border:1px solid {{ tDry.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
               <img src="./img/tile-dry.webp" alt="Dry Cleaning" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tDry.dotBorder }};background:{{ tDry.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tDry.tick }}</span>
             </div>
             <div style="margin-top:9px;font-size:clamp(12px,1.05vw,14px);line-height:1.25;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center;text-align:center;font-weight:{{ tDry.labelWeight }}">Dry Cleaning</div>
           </button>
-          <button onClick="{{ tShoe.toggle }}" style="text-align:center;background:{{ tShoe.bg }};border:1px solid {{ tShoe.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
+          <button data-tile="shoe" onClick="{{ tShoe.toggle }}" style="text-align:center;background:{{ tShoe.bg }};border:1px solid {{ tShoe.bd }};border-radius:14px;padding:clamp(7px,0.9vw,10px) clamp(7px,0.9vw,10px) clamp(9px,1vw,12px);cursor:pointer;font-family:inherit;color:#0B1B2B;display:block;width:100%;min-width:0;transition:border-color .18s,background .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 6px 18px rgba(11,27,43,0.09);transform:translateY(-3px)" style-active="transform:translateY(-1px)" style-focus="outline:2px solid #1B4FD8;outline-offset:2px" type="button">
             <div style="aspect-ratio:1/1;border-radius:10px;position:relative;overflow:hidden;min-width:0">
               <img src="./img/tile-shoes.webp" alt="Shoes Wash" width="480" height="480" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .3s ease" style-hover="transform:scale(1.02)">
               <span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:5px;border:1.5px solid {{ tShoe.dotBorder }};background:{{ tShoe.dot }};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(11,27,43,0.14);transition:background .18s,border-color .18s">{{ tShoe.tick }}</span>
@@ -796,20 +894,33 @@
           <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 8px">Monthly plans</h2>
           <p style="font-size:16.5px;color:#6B7885;margin:0;max-width:560px">Wash &amp; Iron, billed monthly instead of per kg. Pause or cancel any week.</p>
         </div>
-        
       </div>
-<div style="width: 164px; height: 126px; flex: none; border-radius: 8px; background: url('./img/mascot.webp') center/cover no-repeat; display: {{ mascotDisplay }}; position: absolute; top: 109px; right: 0; transform-origin: bottom center; animation: bwBob 3.6s ease-in-out infinite"></div>
+      <div aria-hidden="true" style="width: 164px; height: 126px; flex: none; border-radius: 8px; background: url('./img/mascot.webp') center/cover no-repeat; display: {{ mascotDisplay }}; position: absolute; top: 109px; right: 0; transform-origin: bottom center; animation: bwBob 3.6s ease-in-out infinite"></div>
       <div data-px style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
         <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
-          <div class="px-card" style="background: #fff; border: 1px solid #E4E8EC; border-radius: 12px; padding: 26px 24px; display: flex; flex-direction: column; box-shadow: {{ p.ring }}; transition: box-shadow .22s,transform .22s" style-hover="box-shadow:0 14px 32px rgba(11,27,43,0.12);transform:translateY(-8px)">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
-              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:100px;white-space:nowrap;color:{{ p.tagInk }};background:{{ p.tagBg }};border:1px solid {{ p.tagLine }}">{{ p.tagIcon }}{{ p.tag }}</span>
+          <div class="plan-machine {{ p.onClass }}">
+            <div class="plan-panel">
+              <span style="display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:100px;white-space:nowrap;color:{{ p.tagInk }};background:{{ p.tagBg }};border:1px solid {{ p.tagLine }}">{{ p.tag }}</span>
+              <span class="plan-dials"><span></span><span></span></span>
             </div>
-            <div style="font-size:16px;font-weight:700;letter-spacing:-0.015em">{{ p.name }}</div>
-            <div style="font-size: 16px; color: #6B7885; margin-top: 4px">{{ p.load }}</div>
-            <div style="font-size:34px;font-weight:800;letter-spacing:-0.035em;margin:20px 0 2px">{{ p.price }}</div>
-            <div style="font-size:13.5px;color:#6B7885;margin-bottom:20px">{{ p.per }}</div>
-            <button onClick="{{ p.choose }}" style="border:1px solid #1B4FD8;background:{{ p.btnBg }};color:{{ p.btnFg }};font-size:14.5px;font-weight:600;padding:12px;border-radius:9px;cursor:pointer;margin-top:auto">{{ p.cta }}</button>
+            <div class="plan-body">
+              <div style="font-size:16px;font-weight:700;letter-spacing:-0.015em">{{ p.name }}</div>
+              <div style="font-size:14.5px;color:#6B7885;margin-top:4px">{{ p.load }}</div>
+              <div class="plan-drum">
+                <div class="plan-water">
+                  <svg class="back" viewBox="0 0 240 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,22 Q30,4 60,22 T120,22 T180,22 T240,22 V60 H0 Z" fill="{{ p.crest }}"></path></svg>
+                  <svg class="front" viewBox="0 0 240 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0,22 Q30,4 60,22 T120,22 T180,22 T240,22 V60 H0 Z" fill="{{ p.fill }}"></path></svg>
+                </div>
+                <span class="bub" style="left:22px;width:13px;height:13px;animation:bwBub 5.4s 0s linear infinite"><span style="background:{{ p.crest }};border:1.5px solid {{ p.line }}" title="Pop"></span></span>
+                <span class="bub" style="left:48px;width:9px;height:9px;animation:bwBub 4.2s 1.1s linear infinite"><span style="background:{{ p.crest }};border:1.5px solid {{ p.line }}" title="Pop"></span></span>
+                <span class="bub" style="left:74px;width:16px;height:16px;animation:bwBub 6.1s 2.3s linear infinite"><span style="background:{{ p.crest }};border:1.5px solid {{ p.line }}" title="Pop"></span></span>
+                <span class="bub" style="left:100px;width:10px;height:10px;animation:bwBub 4.8s 0.6s linear infinite"><span style="background:{{ p.crest }};border:1.5px solid {{ p.line }}" title="Pop"></span></span>
+                <span class="bub" style="left:118px;width:12px;height:12px;animation:bwBub 5.7s 3.1s linear infinite"><span style="background:{{ p.crest }};border:1.5px solid {{ p.line }}" title="Pop"></span></span>
+                <span class="plan-price">{{ p.price }}</span>
+              </div>
+              <div style="font-size:13.5px;color:#6B7885;margin-bottom:20px">{{ p.per }}</div>
+              <button class="plan-choose" onClick="{{ p.choose }}" type="button">{{ p.cta }}</button>
+            </div>
           </div>
         </sc-for>
       </div>
@@ -1043,28 +1154,23 @@ class Component extends DCLogic {
     const names = defs.filter(d => this.state.sel.includes(d.id)).map(d => d.name).join(" + ");
 
     const planDefs = [
-      { id: "s", name: "Single", load: "Up to 6 kg a month", price: "₹599", per: "≈ ₹100 / kg · saves ₹55 a month", tag: "FOR ONE" },
-      { id: "h", name: "Household", load: "Up to 12 kg a month", price: "₹999", per: "≈ ₹83 / kg · saves ₹309 a month", popular: true, tag: "MOST POPULAR" },
-      { id: "f", name: "Family+", load: "Up to 20 kg a month", price: "₹1,699", per: "≈ ₹85 / kg · saves ₹481 a month", tag: "2 PICKUPS A WEEK" }
+      { id: "s", name: "Single", load: "Up to 6 kg a month", price: "₹599", per: "≈ ₹100 / kg · saves ₹55 a month", tag: "👤 FOR ONE" },
+      { id: "h", name: "Household", load: "Up to 12 kg a month", price: "₹999", per: "≈ ₹83 / kg · saves ₹309 a month", popular: true, tag: "★ MOST POPULAR" },
+      { id: "f", name: "Family+", load: "Up to 20 kg a month", price: "₹1,699", per: "≈ ₹85 / kg · saves ₹481 a month", tag: "🚚 2 PICKUPS A WEEK" }
     ];
     const chosen = planDefs.find(p => p.id === this.state.plan);
     const plans = planDefs.map(p => {
       const on = this.state.plan === p.id;
       return Object.assign({}, p, {
         choose: () => this.setState({ plan: on ? null : p.id }),
-        ring: on ? "0 0 0 2px #1B4FD8" : "none",
-        btnBg: on ? "#1B4FD8" : "#fff",
-        btnFg: on ? "#fff" : "#1B4FD8",
+        onClass: on ? "on" : "",
         cta: on ? "Selected" : "Choose plan",
+        fill: { s: "#DCF0E9", h: "#E3EDFD", f: "#EDE4FB" }[p.id],
+        crest: { s: "#CDE9DF", h: "#D3E2FC", f: "#E2D5F7" }[p.id],
+        line: { s: "rgba(14,124,102,0.35)", h: "rgba(27,79,216,0.32)", f: "rgba(122,75,196,0.32)" }[p.id],
         tagInk: { s: "#0E7C66", h: "#1B4FD8", f: "#7A4BC4" }[p.id],
-        tagBg: { s: "#EAF7F2", h: "#F0F4FF", f: "#F5F0FE" }[p.id],
-        tagLine: { s: "#CBE9DF", h: "#D8E2FB", f: "#E4D9FA" }[p.id],
-        tagIcon: React.createElement("svg", { width: 12, height: 12, viewBox: "0 0 24 24", fill: p.id === "h" ? "currentColor" : "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinecap: "round", strokeLinejoin: "round", style: { flex: "none" }, "aria-hidden": "true" },
-          React.createElement("path", { key: "p", d: {
-            s: "M12 12.4a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4.8 20.2c0-3.4 3.2-5.6 7.2-5.6s7.2 2.2 7.2 5.6",
-            h: "M12 3.2l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.4l5.9-.8z",
-            f: "M20.5 7.5l-8.5 12.8L3.5 7.5 7 3.7h10z M7 3.7l5 3.8 5-3.8 M3.5 7.5h17"
-          }[p.id] }))
+        tagBg: { s: "#E6F5F0", h: "#EAF0FE", f: "#F2ECFC" }[p.id],
+        tagLine: { s: "#BFE5D9", h: "#C6D8FB", f: "#DDCCF5" }[p.id]
       });
     });
 
@@ -1085,8 +1191,8 @@ class Component extends DCLogic {
       closeMenu: () => this.setState({ menu: false }),
       planPicked: !!chosen,
       planSummary: chosen ? chosen.name + " plan · " + chosen.price + " a month" : "",
-      planDetail: chosen ? chosen.load + " · " + chosen.per : "",
-      planWaHref: "https://wa.me/917030568910?text=" + encodeURIComponent(chosen ? "Hi Blue Wave, I'd like to start the " + chosen.name + " plan (" + chosen.price + " a month, " + chosen.load.toLowerCase() + ")." : ""),
+      planDetail: chosen ? chosen.load + " · Wash & Iron · pause or cancel any week" : "",
+      planWaHref: "https://wa.me/917030568910?text=" + encodeURIComponent(chosen ? "Hi Blue Wave, I'd like to start the " + chosen.name + " plan (" + chosen.price + "/month)." : ""),
       clearPlan: () => this.setState({ plan: null }),
       tFold: tiles[0], tIron: tiles[1], tDry: tiles[2], tShoe: tiles[3],
       heroCta: sel.length === 1 ? "Book " + sel[0] + " pickup" : "Book a free pickup",
@@ -1167,5 +1273,18 @@ class Component extends DCLogic {
 
 </script>
 <script src="./parallax.js" defer></script>
+<script src="./bubbles.js" defer></script>
+<script>
+document.addEventListener("click", function (e) {
+  var skin = e.target.closest && e.target.closest("#plans .bub > span");
+  if (!skin) return;
+  e.stopPropagation();
+  var wrap = skin.parentNode;
+  if (wrap.classList.contains("burst")) return;
+  wrap.classList.add("burst");
+  setTimeout(function () { wrap.classList.remove("burst"); }, 950);
+});
+</script>
+<canvas class="bubble-layer" aria-hidden="true"></canvas>
 </body>
 </html>
