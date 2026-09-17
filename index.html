@@ -500,15 +500,18 @@
     border-radius: 14px;
     font-size: 16px;
     font-weight: 600;
+    line-height: 1;
     color: #0B1B2B;
     min-height: 44px;
     text-decoration: none;
   }
   .mobile-card .menu-ico {
-    width: 20px;
-    height: 20px;
+    display: block;
+    width: 18px;
+    height: 18px;
     flex: none;
     color: #1B4FD8;
+    overflow: visible;
   }
   .mobile-panel.is-open .mobile-card a {
     animation: menuLinkIn .7s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -528,15 +531,20 @@
   .mobile-card a.tel {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 10px;
-    padding: 13px 18px;
+    padding: 0 18px;
     border: 0;
     border-radius: 12px;
     background: #25D366;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
+    line-height: 1;
     color: #fff;
+    height: 48px;
     min-height: 48px;
     box-shadow: 0 8px 20px rgba(37,211,102,0.32);
   }
@@ -545,17 +553,23 @@
     color: #fff;
     font-size: 15px;
     font-weight: 600;
-    padding: 13px 18px;
+    line-height: 1;
+    padding: 0 18px;
     border-radius: 12px;
     background: #1B4FD8;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
+    height: 48px;
     min-height: 48px;
     margin-top: 6px;
   }
   .mobile-card .nav-menu-book .menu-ico { color: #fff; }
+  .mobile-card .nav-menu-book span {
+    display: block;
+    line-height: 1;
+  }
   @media (max-width: 1059px) {
     section[id] { scroll-margin-top: 100px; }
     .bw-nav .logo-img { width: 210px !important; }

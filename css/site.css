@@ -213,14 +213,17 @@ section[id] { scroll-margin-top: 84px; }
   border-radius: 14px;
   font-size: 16px;
   font-weight: 600;
+  line-height: 1;
   color: #0B1B2B;
   min-height: 44px;
 }
 .mobile-card .menu-ico {
-  width: 20px;
-  height: 20px;
+  display: block;
+  width: 18px;
+  height: 18px;
   flex: none;
   color: #1B4FD8;
+  overflow: visible;
 }
 .mobile-panel.is-open .mobile-card a,
 .page:has(#menu:checked) .mobile-card a {
@@ -242,13 +245,20 @@ section[id] { scroll-margin-top: 84px; }
 .mobile-card a.tel {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
   margin-top: 10px;
-  padding: 13px 18px;
+  padding: 0 18px;
   border: 0;
   border-radius: 12px;
   background: #25D366;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
   color: #fff;
+  height: 48px;
   min-height: 48px;
   box-shadow: 0 8px 20px rgba(37,211,102,0.32);
 }
@@ -256,10 +266,22 @@ section[id] { scroll-margin-top: 84px; }
 .mobile-card a.tel:hover { background: #1EBE59; color: #fff; }
 .mobile-card .btn-nav.menu-book {
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 48px;
+  min-height: 48px;
   margin-top: 8px;
+  padding: 0 18px;
+  font-size: 15px;
+  line-height: 1;
+  gap: 8px;
 }
 .mobile-card .menu-book .menu-ico { color: #fff; }
+.mobile-card .menu-book .cta-full,
+.mobile-card .menu-book .cta-arrow {
+  line-height: 1;
+}
 
 .wrap {
   max-width: 1320px;
