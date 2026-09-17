@@ -766,7 +766,7 @@ footer {
   flex: none;
 }
 @media (max-width: 1059px) {
-  section[id] { scroll-margin-top: 88px; }
+  section[id] { scroll-margin-top: 100px; }
   .pill, .nav-phone { display: none; }
   .burger { display: inline-flex; }
   .logo img { width: 210px; }
@@ -774,7 +774,7 @@ footer {
   .nav-end { display: flex; }
   .nav-end > .btn-nav { display: none; }
   .float-bar { display: flex; }
-  .hero { padding-top: 8px; padding-bottom: 48px; gap: 36px; }
+  .hero { padding-top: 36px; padding-bottom: 48px; gap: 36px; }
   .legal { padding-bottom: 108px; }
 }
 @media (max-width: 639px) {
