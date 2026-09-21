@@ -1,5 +1,6 @@
 (function () {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.innerWidth < 640) return;
 
   var ticking = false;
   var stopT = 0;

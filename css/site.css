@@ -590,7 +590,9 @@ h2 {
   margin: 0 0 16px;
   max-width: 70ch;
 }
-[data-px] { translate: 0 var(--px, 0); will-change: translate; }
+@media (hover: hover) and (min-width: 640px) {
+  [data-px] { translate: 0 var(--px, 0); }
+}
 .reveal-card {
   transition: transform .28s ease, box-shadow .28s ease;
 }
@@ -919,6 +921,7 @@ footer {
   justify-content: center;
   gap: 6px;
   height: 44px;
+  text-decoration: none;
   transition: background .15s, gap .15s;
 }
 .loc-dir:hover { background: #173FAE; color: #fff; gap: 10px; }
@@ -937,87 +940,6 @@ footer {
   transition: border-color .18s;
 }
 .loc-call:hover { border-color: #1B4FD8; color: #0B1B2B; }
-.loc-map-pop {
-  position: relative;
-  display: inline-flex;
-  z-index: 4;
-}
-.loc-map-pop.is-open,
-.loc-map-pop:hover,
-.loc-map-pop:focus-within {
-  z-index: 8;
-}
-.loc-map-btn {
-  font-family: inherit;
-  cursor: pointer;
-  border: 0;
-}
-.loc-map-bubble {
-  position: absolute;
-  left: 0;
-  top: calc(100% + 2px);
-  padding-top: 8px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity .18s ease, transform .18s ease;
-  z-index: 12;
-}
-.loc-map-pop.is-open .loc-map-bubble,
-.loc-map-pop:focus-within .loc-map-bubble {
-  opacity: 1;
-  pointer-events: auto;
-  transform: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .loc-map-pop:hover .loc-map-bubble {
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-  }
-}
-.loc-map-frame {
-  position: relative;
-  width: 300px;
-  max-width: min(300px, calc(100vw - 48px));
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #E4E8EC;
-  background: #EEF1F4;
-  box-shadow: 0 14px 32px rgba(11,27,43,0.14);
-}
-.loc-map-frame iframe {
-  display: block;
-  width: 100%;
-  height: 188px;
-  border: 0;
-  pointer-events: none;
-}
-.loc-map-hit {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 10px;
-  background: linear-gradient(180deg, transparent 42%, rgba(7,18,30,0.58) 100%);
-  color: #fff;
-  text-decoration: none;
-}
-.loc-map-hit:hover { color: #fff; }
-.loc-map-hit-cta {
-  background: #1B4FD8;
-  color: #fff;
-  font-size: 13.5px;
-  font-weight: 600;
-  height: 40px;
-  padding: 0 14px;
-  border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 0 6px 16px rgba(11,27,43,0.2);
-}
 @media (max-width: 800px) {
   .loc-panel { grid-template-columns: 1fr; }
 }

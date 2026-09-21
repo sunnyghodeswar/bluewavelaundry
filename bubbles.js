@@ -15,8 +15,8 @@
   var running = true;
   var last = 0;
   var mobile = window.innerWidth < 640;
-  var MAX = mobile ? 19 : 28;
-  var SCENE_MAX = mobile ? 4 : 6;
+  var MAX = mobile ? 12 : 20;
+  var SCENE_MAX = mobile ? 3 : 5;
   var emitIn = 0.4;
   var sceneIn = 1.1;
   var howIn = 0.5;
@@ -39,6 +39,8 @@
   var hasPointer = false;
   var seeded = false;
   var cardOn = {};
+  var sceneCache = [];
+  var sceneAt = 0;
 
   function bake(hue) {
     var s = 128;
@@ -155,6 +157,8 @@
   }
 
   function liveScenes() {
+    var now = Date.now();
+    if (sceneCache.length && now - sceneAt < 500) return sceneCache;
     var br = document.body.getBoundingClientRect();
     var nodes = document.querySelectorAll(SCENE_SEL);
     var vis = [];
@@ -176,7 +180,9 @@
       all.push(s);
       if (box.bottom > 48 && box.top < H - 48) vis.push(s);
     }
-    return vis.length ? vis : all;
+    sceneCache = vis.length ? vis : all;
+    sceneAt = now;
+    return sceneCache;
   }
 
   function pickScene() {
@@ -459,7 +465,7 @@
     }
     howIn -= dt;
     if (howIn <= 0) {
-      howIn = 0.7;
+      howIn = 1.6;
       dressHow();
     }
 
@@ -508,17 +514,8 @@
       }
       var y = b.y0 + b.ty;
       var pageH = field.offsetHeight || document.documentElement.scrollHeight;
-      if (b.fromScene && b.sceneEl) {
-        var host = b.sceneEl.getBoundingClientRect();
-        var body = document.body.getBoundingClientRect();
-        var sx = b.x0 + b.tx;
-        var sy = y;
-        var pad = 36;
-        var left = host.left - body.left - pad;
-        var right = host.right - body.left + pad;
-        var top = host.top - body.top - pad;
-        var bottom = host.bottom - body.top + pad;
-        if (sx < left || sx > right || sy < top || sy > bottom) {
+      if (b.fromScene) {
+        if (b.tx * b.tx + b.ty * b.ty > 10000) {
           var next = pickScene();
           if (next) launch(b, false, scenePoint(next));
           else launch(b, false);
@@ -598,6 +595,7 @@
     mobile = W < 640;
     sizeField();
     cacheDrums();
+    sceneCache = [];
   });
 
   document.addEventListener("visibilitychange", function () {
