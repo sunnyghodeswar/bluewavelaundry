@@ -15,11 +15,10 @@
   var running = true;
   var last = 0;
   var mobile = window.innerWidth < 640;
-  var MAX = mobile ? 12 : 20;
-  var SCENE_MAX = mobile ? 3 : 5;
+  var DRUM_MAX = mobile ? 12 : 16;
+  var PER_SCENE = 2;
   var emitIn = 0.4;
-  var sceneIn = 1.1;
-  var howIn = 0.5;
+  var dressIn = 0.6;
   var SCENE_SEL = [
     'img[src*="hero-pickup"]',
     'img[src*="hero-clean"]',
@@ -140,75 +139,54 @@
     }
   }
 
-  function isHowScene(el) {
-    return !!(el && el.closest && el.closest(".how-step"));
+  function graphicHost(el) {
+    if (!el || !el.closest) return el || null;
+    return el.closest(".how-frame") || el.closest(".cta") || el.closest(".plan-machine") || el;
   }
 
-  function sceneHasBubble(el) {
-    var host = (el.closest && el.closest(".how-frame")) || el;
-    for (var i = 0; i < bubbles.length; i++) {
-      var se = bubbles[i].sceneEl;
-      if (!bubbles[i].fromScene || !se) continue;
-      if (se === el || se === host) return true;
-      if (host.contains && host.contains(se)) return true;
-      if (se.contains && se.contains(host)) return true;
-    }
-    return false;
-  }
-
-  function liveScenes() {
+  function liveGraphics() {
     var now = Date.now();
-    if (sceneCache.length && now - sceneAt < 500) return sceneCache;
+    if (sceneCache.length && now - sceneAt < 400) return sceneCache;
     var br = document.body.getBoundingClientRect();
     var nodes = document.querySelectorAll(SCENE_SEL);
-    var vis = [];
-    var all = [];
+    var seen = [];
+    var out = [];
     var i;
+    var host;
     var box;
     for (i = 0; i < nodes.length; i++) {
-      if (nodes[i].tagName === "IMG" && nodes[i].closest(".how-frame")) continue;
-      box = nodes[i].getBoundingClientRect();
-      if (box.width < 72 || box.height < 72) continue;
-      var s = {
-        el: nodes[i],
+      host = graphicHost(nodes[i]);
+      if (!host || seen.indexOf(host) !== -1) continue;
+      box = host.getBoundingClientRect();
+      if (box.width < 64 || box.height < 64) continue;
+      seen.push(host);
+      out.push({
+        el: host,
         x: box.left - br.left,
         y: box.top - br.top,
         w: box.width,
         h: box.height,
-        sprite: i % urls.length
-      };
-      all.push(s);
-      if (box.bottom > 48 && box.top < H - 48) vis.push(s);
+        sprite: out.length % urls.length
+      });
     }
-    sceneCache = vis.length ? vis : all;
+    sceneCache = out;
     sceneAt = now;
-    return sceneCache;
+    return out;
   }
 
-  function pickScene() {
-    var scenes = liveScenes();
-    if (!scenes.length) return null;
-    var howEmpty = [];
-    var how = [];
-    var rest = [];
-    for (var i = 0; i < scenes.length; i++) {
-      if (isHowScene(scenes[i].el)) {
-        how.push(scenes[i]);
-        if (!sceneHasBubble(scenes[i].el)) howEmpty.push(scenes[i]);
-      } else {
-        rest.push(scenes[i]);
-      }
-    }
-    if (howEmpty.length) return howEmpty[(Math.random() * howEmpty.length) | 0];
-    if (how.length && Math.random() < 0.55) return how[(Math.random() * how.length) | 0];
-    var pool = rest.length ? rest : scenes;
-    return pool[(Math.random() * pool.length) | 0];
-  }
-
-  function sceneCount() {
+  function bubblesOn(host) {
+    var key = graphicHost(host);
     var n = 0;
     for (var i = 0; i < bubbles.length; i++) {
-      if (bubbles[i].fromScene && !isHowScene(bubbles[i].sceneEl)) n++;
+      if (bubbles[i].fromScene && graphicHost(bubbles[i].sceneEl) === key) n++;
+    }
+    return n;
+  }
+
+  function drumCount() {
+    var n = 0;
+    for (var i = 0; i < bubbles.length; i++) {
+      if (!bubbles[i].fromScene && !bubbles[i].cardId) n++;
     }
     return n;
   }
@@ -222,6 +200,42 @@
       fromScene: true,
       sceneEl: scene.el
     };
+  }
+
+  function graphicOf(el) {
+    var list = liveGraphics();
+    var host = graphicHost(el);
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].el === host) return list[i];
+    }
+    return list[0] || null;
+  }
+
+  function spawnOnGraphic(scene) {
+    var b = { el: makeEl() };
+    launch(b, false, scenePoint(scene));
+    bubbles.push(b);
+  }
+
+  function dressGraphics() {
+    var list = liveGraphics();
+    var i;
+    var scene;
+    for (i = 0; i < list.length; i++) {
+      scene = list[i];
+      while (bubblesOn(scene.el) < PER_SCENE) spawnOnGraphic(scene);
+    }
+  }
+
+  function relaunchOnGraphic(b) {
+    var scene = graphicOf(b.sceneEl);
+    if (!scene) return false;
+    launch(b, false, scenePoint(scene));
+    b.alpha = 0;
+    b.fadeIn = true;
+    b.fadeOut = false;
+    paint(b);
+    return true;
   }
 
   function pickDrum() {
@@ -258,16 +272,23 @@
     };
   }
 
+  function pickRadius(kind) {
+    var roll = Math.random();
+    if (kind === "nav") return rand(6, 11);
+    if (kind === "card") return rand(7, 14);
+    if (kind === "scene") {
+      if (roll < 0.6) return rand(7, 12);
+      if (roll < 0.92) return rand(12, 16);
+      return rand(16, 20);
+    }
+    if (roll < 0.55) return rand(7, 12);
+    if (roll < 0.9) return rand(12, 18);
+    return rand(18, 24);
+  }
+
   function launch(b, aloft, src) {
     src = src || pickDrum();
-    var tiny = src.fromNav || src.fromCard || src.fromScene || Math.random() < 0.5;
-    b.r = src.fromScene
-      ? rand(11, 24)
-      : src.fromCard
-        ? rand(8, 18)
-        : src.fromNav
-          ? rand(7, 16)
-          : (tiny ? rand(10, 18) : rand(18, 36));
+    b.r = pickRadius(src.fromScene ? "scene" : src.fromCard ? "card" : src.fromNav ? "nav" : "drum");
     b.x0 = src.x;
     b.y0 = src.y;
     b.dir = src.fromNav ? 1 : src.fromScene ? (Math.random() < 0.7 ? -1 : 1) : -1;
@@ -281,6 +302,8 @@
     b.wobAmp = src.fromScene ? rand(0.08, 0.24) : rand(0.14, 0.42);
     b.fromScene = !!src.fromScene;
     b.sceneEl = src.fromScene ? src.sceneEl : null;
+    b.fadeOut = false;
+    b.fadeIn = false;
     if (src.fromScene) {
       b.vy = rand(0.06, 0.18);
       b.vx = rand(-0.14, 0.14);
@@ -342,50 +365,10 @@
 
   function spawnFromDrum() {
     cacheDrums();
-    if (bubbles.length >= MAX) return;
+    if (drumCount() >= DRUM_MAX) return;
     var b = { el: makeEl() };
     launch(b, false);
     bubbles.push(b);
-  }
-
-  function spawnFromScene() {
-    if (bubbles.length >= MAX) return;
-    var scene = pickScene();
-    if (!scene) return;
-    if (isHowScene(scene.el)) {
-      if (sceneHasBubble(scene.el)) return;
-    } else if (sceneCount() >= SCENE_MAX) {
-      return;
-    }
-    var b = { el: makeEl() };
-    launch(b, false, scenePoint(scene));
-    bubbles.push(b);
-  }
-
-  function dressHow() {
-    var frames = document.querySelectorAll(".how-frame");
-    if (!frames.length || bubbles.length >= MAX) return;
-    var br = document.body.getBoundingClientRect();
-    var i;
-    var box;
-    for (i = 0; i < frames.length; i++) {
-      if (bubbles.length >= MAX) return;
-      box = frames[i].getBoundingClientRect();
-      if (box.width < 72 || box.height < 72) continue;
-      if (box.bottom < 64 || box.top > H - 64) continue;
-      if (sceneHasBubble(frames[i])) continue;
-      var scene = {
-        el: frames[i],
-        x: box.left - br.left,
-        y: box.top - br.top,
-        w: box.width,
-        h: box.height,
-        sprite: i % urls.length
-      };
-      var b = { el: makeEl() };
-      launch(b, false, scenePoint(scene));
-      bubbles.push(b);
-    }
   }
 
   function cardId(el) {
@@ -426,14 +409,13 @@
     H = window.innerHeight;
     sizeField();
     cacheDrums();
-    var start = mobile ? 8 : 12;
-    while (bubbles.length < start) {
+    var start = mobile ? 10 : 12;
+    while (drumCount() < start) {
       var b = { el: makeEl() };
       launch(b, true);
       bubbles.push(b);
     }
-    var extra = mobile ? 2 : 3;
-    while (extra-- > 0) spawnFromScene();
+    dressGraphics();
     seeded = true;
   }
 
@@ -457,16 +439,10 @@
       spawnFromDrum();
       if (Math.random() < 0.35) spawnFromDrum();
     }
-    sceneIn -= dt;
-    if (sceneIn <= 0) {
-      sceneIn = rand(2.1, 3.2);
-      spawnFromScene();
-      if (Math.random() < 0.28) spawnFromScene();
-    }
-    howIn -= dt;
-    if (howIn <= 0) {
-      howIn = 1.6;
-      dressHow();
+    dressIn -= dt;
+    if (dressIn <= 0) {
+      dressIn = 0.9;
+      dressGraphics();
     }
 
     for (var i = 0; i < bubbles.length; i++) {
@@ -477,10 +453,6 @@
           if (b.cardId) {
             dropBubble(i);
             i--;
-          } else if (b.fromScene) {
-            var again = pickScene();
-            if (again) launch(b, false, scenePoint(again));
-            else launch(b, false);
           } else {
             launch(b, false);
           }
@@ -488,6 +460,25 @@
         }
         paint(b);
         continue;
+      }
+      if (b.fadeOut) {
+        b.alpha -= dt * 2.8;
+        if (b.alpha <= 0) {
+          if (!relaunchOnGraphic(b)) {
+            dropBubble(i);
+            i--;
+          }
+        } else {
+          paint(b);
+        }
+        continue;
+      }
+      if (b.fadeIn) {
+        b.alpha += dt * 2.8;
+        if (b.alpha >= 0.95) {
+          b.alpha = 0.95;
+          b.fadeIn = false;
+        }
       }
       b.wob += dt * b.wobSp;
       if (hasPointer) {
@@ -516,9 +507,8 @@
       var pageH = field.offsetHeight || document.documentElement.scrollHeight;
       if (b.fromScene) {
         if (b.tx * b.tx + b.ty * b.ty > 10000) {
-          var next = pickScene();
-          if (next) launch(b, false, scenePoint(next));
-          else launch(b, false);
+          b.fadeOut = true;
+          paint(b);
           continue;
         }
       } else if ((b.dir < 0 && y < -40) || (b.dir > 0 && y > pageH + 40)) {
@@ -547,8 +537,7 @@
       for (var i = 0; i < bubbles.length; i++) {
         if (!bubbles[i].cardId && !bubbles[i].fromScene) launch(bubbles[i], true);
       }
-      var extra = mobile ? 2 : 3;
-      while (sceneCount() < extra) spawnFromScene();
+      dressGraphics();
       sizeField();
       clearInterval(wait);
     } else if (tries > 50) {
@@ -572,7 +561,7 @@
     if (e.target.closest && e.target.closest("#book button")) return;
     for (var i = 0; i < bubbles.length; i++) {
       var b = bubbles[i];
-      if (b.pop) continue;
+      if (b.pop || b.fromScene) continue;
       var dx = b.x0 + b.tx - mx;
       var dy = b.y0 + b.ty - my;
       if (dx * dx + dy * dy < (b.r + 16) * (b.r + 16)) b.pop = 0.01;
