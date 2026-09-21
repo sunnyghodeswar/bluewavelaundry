@@ -53,10 +53,21 @@
       ],
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Pune",
+        "streetAddress": "Shop no 22, The Groves, Blue Ridge Internal Road, Blue Ridge Phase 1",
+        "addressLocality": "Hinjawadi",
         "addressRegion": "Maharashtra",
+        "postalCode": "411057",
         "addressCountry": "IN"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 18.577091,
+        "longitude": 73.743629
+      },
+      "hasMap": "https://maps.app.goo.gl/5MyKNxTNRqLStzet5",
+      "sameAs": [
+        "https://maps.app.goo.gl/5MyKNxTNRqLStzet5"
+      ],
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -95,6 +106,7 @@
       "@id": "https://bluewavelaundry.in/#faq",
       "mainEntity": [
         { "@type": "Question", "name": "Do you pick up laundry near me in Hinjewadi, Wakad or Baner?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Blue Wave is a doorstep laundry service for Hinjewadi, Wakad and Baner in Pune. Book a 2-hour pickup slot on WhatsApp at +91 70305 68910." } },
+        { "@type": "Question", "name": "Where is Blue Wave Laundry in Hinjewadi?", "acceptedAnswer": { "@type": "Answer", "text": "Shop no 22, The Groves, Blue Ridge Internal Road, Blue Ridge Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pune 411057. Near Dental Paradise Clinic. Open daily 9 AM–9 PM." } },
         { "@type": "Question", "name": "How much does laundry cost?", "acceptedAnswer": { "@type": "Answer", "text": "Wash and fold is ₹79 per kg. Wash and iron is ₹109 per kg. Dry cleaning starts at ₹99 a piece. Shoe wash starts at ₹199 a pair. Pickup and delivery are free on orders above ₹300." } },
         { "@type": "Question", "name": "How long does laundry pickup and delivery take?", "acceptedAnswer": { "@type": "Answer", "text": "Standard wash services come back in about 48 hours. Priority wash is available within 24 hours. Dry cleaning timing is confirmed at pickup." } },
         { "@type": "Question", "name": "Do you mix my clothes with other customers?", "acceptedAnswer": { "@type": "Answer", "text": "No. Your order is washed on its own cycle, never combined with another household." } },
@@ -371,6 +383,172 @@
   }
   .css-bubbles { display: none !important; }
   #top { position: relative; }
+  .loc-panel {
+    background: #fff;
+    border: 1px solid #E4E8EC;
+    border-radius: 16px;
+    padding: clamp(20px, 2.2vw, 28px);
+    margin: 0 0 28px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(220px, 0.85fr);
+    gap: 22px 40px;
+    align-items: start;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+  }
+  .loc-panel address {
+    font-style: normal;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #4A5866;
+    margin: 10px 0 0;
+  }
+  .loc-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 2px;
+  }
+  .loc-fact {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 14.5px;
+    line-height: 1.45;
+    color: #4A5866;
+  }
+  .loc-fact svg {
+    flex: none;
+    margin-top: 1px;
+    color: #1B4FD8;
+  }
+  .loc-fact strong {
+    display: block;
+    color: #0B1B2B;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .loc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .loc-dir {
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 600;
+    padding: 0 18px;
+    border-radius: 10px;
+    background: #1B4FD8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 44px;
+    transition: background .15s, gap .15s;
+  }
+  .loc-dir:hover { background: #173FAE; color: #fff; gap: 10px; }
+  .loc-call {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 10px;
+    border: 1px solid #E1E5EA;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #0B1B2B;
+    background: #fff;
+    transition: border-color .18s;
+  }
+  .loc-call:hover { border-color: #1B4FD8; color: #0B1B2B; }
+  .loc-map-pop {
+    position: relative;
+    display: inline-flex;
+    z-index: 4;
+  }
+  .loc-map-pop.is-open,
+  .loc-map-pop:hover,
+  .loc-map-pop:focus-within {
+    z-index: 8;
+  }
+  .loc-map-btn {
+    font-family: inherit;
+    cursor: pointer;
+    border: 0;
+  }
+  .loc-map-bubble {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 2px);
+    padding-top: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .18s ease, transform .18s ease;
+    z-index: 12;
+  }
+  .loc-map-pop.is-open .loc-map-bubble,
+  .loc-map-pop:focus-within .loc-map-bubble {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .loc-map-pop:hover .loc-map-bubble {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+  }
+  .loc-map-frame {
+    position: relative;
+    width: 300px;
+    max-width: min(300px, calc(100vw - 48px));
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #E4E8EC;
+    background: #EEF1F4;
+    box-shadow: 0 14px 32px rgba(11,27,43,0.14);
+  }
+  .loc-map-frame iframe {
+    display: block;
+    width: 100%;
+    height: 188px;
+    border: 0;
+    pointer-events: none;
+  }
+  .loc-map-hit {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 10px;
+    background: linear-gradient(180deg, transparent 42%, rgba(7,18,30,0.58) 100%);
+    color: #fff;
+    text-decoration: none;
+  }
+  .loc-map-hit:hover { color: #fff; }
+  .loc-map-hit-cta {
+    background: #1B4FD8;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 16px rgba(11,27,43,0.2);
+  }
+  @media (max-width: 800px) {
+    .loc-panel { grid-template-columns: 1fr; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .bubble-layer, .css-bubbles, .bw-soaps { display: none !important; }
   }
@@ -585,7 +763,6 @@
 </style>
 </helmet>
 <div id="top" style="font-family: Figtree,system-ui,sans-serif; color: #0B1B2B; background: #FFFFFF; line-height: 2; font-size: 16px">
-  <div class="css-bubbles" aria-hidden="true"><i style="left:2.0%;top:3.0%;width:28px;height:28px;animation-duration:18s;animation-delay:-0.0s"></i><i style="left:19.2%;top:14.3%;width:45px;height:45px;animation-duration:25s;animation-delay:-1.9s"></i><i style="left:28.4%;top:25.6%;width:62px;height:62px;animation-duration:32s;animation-delay:-3.8s"></i><i style="left:45.6%;top:36.9%;width:79px;height:79px;animation-duration:23s;animation-delay:-5.7s"></i><i style="left:54.8%;top:48.2%;width:32px;height:32px;animation-duration:30s;animation-delay:-7.6s"></i><i style="left:64.0%;top:59.5%;width:49px;height:49px;animation-duration:21s;animation-delay:-9.5s"></i><i style="left:81.2%;top:70.8%;width:66px;height:66px;animation-duration:28s;animation-delay:-11.4s"></i><i style="left:90.4%;top:82.1%;width:83px;height:83px;animation-duration:19s;animation-delay:-13.3s"></i><i style="left:2.0%;top:93.4%;width:36px;height:36px;animation-duration:26s;animation-delay:-15.2s"></i><i style="left:19.2%;top:12.7%;width:53px;height:53px;animation-duration:33s;animation-delay:-17.1s"></i><i style="left:28.4%;top:24.0%;width:70px;height:70px;animation-duration:24s;animation-delay:-19.0s"></i><i style="left:45.6%;top:35.3%;width:87px;height:87px;animation-duration:31s;animation-delay:-20.9s"></i><i style="left:54.8%;top:46.6%;width:40px;height:40px;animation-duration:22s;animation-delay:-22.8s"></i><i style="left:64.0%;top:57.9%;width:57px;height:57px;animation-duration:29s;animation-delay:-0.7s"></i><i style="left:81.2%;top:69.2%;width:74px;height:74px;animation-duration:20s;animation-delay:-2.6s"></i><i style="left:90.4%;top:80.5%;width:91px;height:91px;animation-duration:27s;animation-delay:-4.5s"></i><i style="left:2.0%;top:91.8%;width:44px;height:44px;animation-duration:18s;animation-delay:-6.4s"></i><i style="left:19.2%;top:11.1%;width:61px;height:61px;animation-duration:25s;animation-delay:-8.3s"></i><i style="left:28.4%;top:22.4%;width:78px;height:78px;animation-duration:32s;animation-delay:-10.2s"></i><i style="left:45.6%;top:33.7%;width:31px;height:31px;animation-duration:23s;animation-delay:-12.1s"></i><i style="left:54.8%;top:45.0%;width:48px;height:48px;animation-duration:30s;animation-delay:-14.0s"></i><i style="left:64.0%;top:56.3%;width:65px;height:65px;animation-duration:21s;animation-delay:-15.9s"></i><i style="left:81.2%;top:67.6%;width:82px;height:82px;animation-duration:28s;animation-delay:-17.8s"></i><i style="left:90.4%;top:78.9%;width:35px;height:35px;animation-duration:19s;animation-delay:-19.7s"></i><i style="left:2.0%;top:90.2%;width:52px;height:52px;animation-duration:26s;animation-delay:-21.6s"></i><i style="left:19.2%;top:9.5%;width:69px;height:69px;animation-duration:33s;animation-delay:-23.5s"></i><i style="left:28.4%;top:20.8%;width:86px;height:86px;animation-duration:24s;animation-delay:-1.4s"></i><i style="left:45.6%;top:32.1%;width:39px;height:39px;animation-duration:31s;animation-delay:-3.3s"></i><i style="left:54.8%;top:43.4%;width:56px;height:56px;animation-duration:22s;animation-delay:-5.2s"></i><i style="left:64.0%;top:54.7%;width:73px;height:73px;animation-duration:29s;animation-delay:-7.1s"></i><i style="left:81.2%;top:66.0%;width:90px;height:90px;animation-duration:20s;animation-delay:-9.0s"></i><i style="left:90.4%;top:77.3%;width:43px;height:43px;animation-duration:27s;animation-delay:-10.9s"></i><i style="left:2.0%;top:88.6%;width:60px;height:60px;animation-duration:18s;animation-delay:-12.8s"></i><i style="left:19.2%;top:7.9%;width:77px;height:77px;animation-duration:25s;animation-delay:-14.7s"></i><i style="left:28.4%;top:19.2%;width:30px;height:30px;animation-duration:32s;animation-delay:-16.6s"></i><i style="left:45.6%;top:30.5%;width:47px;height:47px;animation-duration:23s;animation-delay:-18.5s"></i><i style="left:54.8%;top:41.8%;width:64px;height:64px;animation-duration:30s;animation-delay:-20.4s"></i><i style="left:64.0%;top:53.1%;width:81px;height:81px;animation-duration:21s;animation-delay:-22.3s"></i><i style="left:81.2%;top:64.4%;width:34px;height:34px;animation-duration:28s;animation-delay:-0.2s"></i><i style="left:90.4%;top:75.7%;width:51px;height:51px;animation-duration:19s;animation-delay:-2.1s"></i><i style="left:2.0%;top:87.0%;width:68px;height:68px;animation-duration:26s;animation-delay:-4.0s"></i><i style="left:19.2%;top:6.3%;width:85px;height:85px;animation-duration:33s;animation-delay:-5.9s"></i><i style="left:28.4%;top:17.6%;width:38px;height:38px;animation-duration:24s;animation-delay:-7.8s"></i><i style="left:45.6%;top:28.9%;width:55px;height:55px;animation-duration:31s;animation-delay:-9.7s"></i><i style="left:54.8%;top:40.2%;width:72px;height:72px;animation-duration:22s;animation-delay:-11.6s"></i><i style="left:64.0%;top:51.5%;width:89px;height:89px;animation-duration:29s;animation-delay:-13.5s"></i><i style="left:81.2%;top:62.8%;width:42px;height:42px;animation-duration:20s;animation-delay:-15.4s"></i><i style="left:90.4%;top:74.1%;width:59px;height:59px;animation-duration:27s;animation-delay:-17.3s"></i><i style="left:2.0%;top:85.4%;width:76px;height:76px;animation-duration:18s;animation-delay:-19.2s"></i><i style="left:19.2%;top:4.7%;width:29px;height:29px;animation-duration:25s;animation-delay:-21.1s"></i><i style="left:28.4%;top:16.0%;width:46px;height:46px;animation-duration:32s;animation-delay:-23.0s"></i><i style="left:45.6%;top:27.3%;width:63px;height:63px;animation-duration:23s;animation-delay:-0.9s"></i><i style="left:54.8%;top:38.6%;width:80px;height:80px;animation-duration:30s;animation-delay:-2.8s"></i><i style="left:64.0%;top:49.9%;width:33px;height:33px;animation-duration:21s;animation-delay:-4.7s"></i><i style="left:81.2%;top:61.2%;width:50px;height:50px;animation-duration:28s;animation-delay:-6.6s"></i><i style="left:90.4%;top:72.5%;width:67px;height:67px;animation-duration:19s;animation-delay:-8.5s"></i><i style="left:2.0%;top:83.8%;width:84px;height:84px;animation-duration:26s;animation-delay:-10.4s"></i><i style="left:19.2%;top:3.1%;width:37px;height:37px;animation-duration:33s;animation-delay:-12.3s"></i><i style="left:28.4%;top:14.4%;width:54px;height:54px;animation-duration:24s;animation-delay:-14.2s"></i><i style="left:45.6%;top:25.7%;width:71px;height:71px;animation-duration:31s;animation-delay:-16.1s"></i><i style="left:54.8%;top:37.0%;width:88px;height:88px;animation-duration:22s;animation-delay:-18.0s"></i><i style="left:64.0%;top:48.3%;width:41px;height:41px;animation-duration:29s;animation-delay:-19.9s"></i><i style="left:81.2%;top:59.6%;width:58px;height:58px;animation-duration:20s;animation-delay:-21.8s"></i><i style="left:90.4%;top:70.9%;width:75px;height:75px;animation-duration:27s;animation-delay:-23.7s"></i><i style="left:2.0%;top:82.2%;width:28px;height:28px;animation-duration:18s;animation-delay:-1.6s"></i><i style="left:19.2%;top:93.5%;width:45px;height:45px;animation-duration:25s;animation-delay:-3.5s"></i><i style="left:28.4%;top:12.8%;width:62px;height:62px;animation-duration:32s;animation-delay:-5.4s"></i><i style="left:45.6%;top:24.1%;width:79px;height:79px;animation-duration:23s;animation-delay:-7.3s"></i><i style="left:54.8%;top:35.4%;width:32px;height:32px;animation-duration:30s;animation-delay:-9.2s"></i><i style="left:64.0%;top:46.7%;width:49px;height:49px;animation-duration:21s;animation-delay:-11.1s"></i><i style="left:81.2%;top:58.0%;width:66px;height:66px;animation-duration:28s;animation-delay:-13.0s"></i><i style="left:90.4%;top:69.3%;width:83px;height:83px;animation-duration:19s;animation-delay:-14.9s"></i><i style="left:2.0%;top:80.6%;width:36px;height:36px;animation-duration:26s;animation-delay:-16.8s"></i><i style="left:19.2%;top:91.9%;width:53px;height:53px;animation-duration:33s;animation-delay:-18.7s"></i><i style="left:28.4%;top:11.2%;width:70px;height:70px;animation-duration:24s;animation-delay:-20.6s"></i><i style="left:45.6%;top:22.5%;width:87px;height:87px;animation-duration:31s;animation-delay:-22.5s"></i><i style="left:54.8%;top:33.8%;width:40px;height:40px;animation-duration:22s;animation-delay:-0.4s"></i><i style="left:64.0%;top:45.1%;width:57px;height:57px;animation-duration:29s;animation-delay:-2.3s"></i><i style="left:81.2%;top:56.4%;width:74px;height:74px;animation-duration:20s;animation-delay:-4.2s"></i><i style="left:90.4%;top:67.7%;width:91px;height:91px;animation-duration:27s;animation-delay:-6.1s"></i></div>
 
   <header class="bw-nav" style="position:sticky;top:0;z-index:40">
     <div class="nav-inner" style="max-width:1320px;margin:0 auto;padding:12px clamp(20px,4vw,32px);display:flex;align-items:center;gap:clamp(10px,2vw,24px);justify-content:space-between">
@@ -596,6 +773,7 @@
         <a href="#services" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Services</a>
         <a href="#pricing" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Pricing</a>
         <a href="#how" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">How it works</a>
+        <a href="#areas" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Areas</a>
         <a href="#trust" style="color:inherit;padding:9px clamp(11px,1.2vw,17px);border-radius:100px;transition:background .18s,color .18s,box-shadow .18s" style-hover="background:#fff;color:#0B1B2B;box-shadow:0 1px 3px rgba(11,27,43,0.08)">Trust</a>
       </nav>
       <div class="nav-end" style="display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);flex:none;justify-content:flex-end">
@@ -955,8 +1133,45 @@
 
   <section id="areas" style="border-top:1px solid #EAECEF;background:#FBFCFD">
     <div class="reveal" style="max-width:1320px;margin:0 auto;padding:clamp(64px,7vw,88px) clamp(20px,4vw,32px)">
-      <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 10px">Laundry near you in west Pune</h2>
-      <p style="font-size:16px;line-height:1.55;color:#6B7885;margin:0 0 28px;max-width:62ch">We do not cover all of Pune. If you are in Hinjewadi, Wakad or Baner, we pick up from the door — 9 AM to 9 PM, every day.</p>
+      <h2 style="font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-0.03em;margin:0 0 10px">Find us in Hinjewadi</h2>
+      <p style="font-size:16px;line-height:1.55;color:#6B7885;margin:0 0 28px;max-width:62ch">Our shop is in Blue Ridge Phase 1. We pick up and deliver across Hinjewadi, Wakad and Baner — 9 AM to 9 PM, every day.</p>
+      <div class="loc-panel">
+        <div>
+          <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#1B4FD8;margin-bottom:8px">BLUE RIDGE · PHASE 1</div>
+          <div style="font-size:18px;font-weight:700;letter-spacing:-0.02em;color:#0B1B2B">Blue Wave Laundry</div>
+          <address>Shop no 22, The Groves, Blue Ridge Internal Road, Blue Ridge Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pune, Maharashtra 411057</address>
+          <p style="font-size:13.5px;line-height:1.5;color:#6B7885;margin:10px 0 0">Near Dental Paradise Clinic · Plus code HPGV+Q52</p>
+          <div class="loc-actions">
+            <div class="loc-map-pop">
+              <button type="button" class="loc-dir loc-map-btn" aria-expanded="false" aria-haspopup="dialog">View on map</button>
+              <div class="loc-map-bubble" role="dialog" aria-label="Map of Blue Wave Laundry">
+                <div class="loc-map-frame">
+                  <iframe src="https://maps.google.com/maps?q=18.577091,73.743629+(Blue%20Wave%20Laundry)&z=17&hl=en&output=embed" title="Blue Wave Laundry map preview" tabindex="-1"></iframe>
+                  <a class="loc-map-hit" href="https://maps.app.goo.gl/5MyKNxTNRqLStzet5" target="_blank" rel="noopener">
+                    <span class="loc-map-hit-cta">Open in Google Maps<span>→</span></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <a class="loc-call" href="{{ telHref }}">{{ phone }}</a>
+          </div>
+        </div>
+        <div class="loc-facts">
+          <div class="loc-fact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <div><strong>Shop</strong>The Groves, Blue Ridge Internal Road</div>
+          </div>
+          <div class="loc-fact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div><strong>Hours</strong>Open every day · 9 AM–9 PM</div>
+          </div>
+          <div class="loc-fact">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h3l1.5 4-2 1.5a10 10 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5z"></path></svg>
+            <div><strong>Pickup area</strong>Hinjewadi, Wakad and Baner</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:16px;line-height:1.55;color:#6B7885;margin:0 0 16px;max-width:62ch">Doorstep pickup if you live in these neighbourhoods:</p>
       <div data-px style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
         <a class="px-card" href="/laundry-hinjewadi/" style="display:block;background:#fff;border:1px solid #E4E8EC;border-radius:16px;padding:24px 22px;color:inherit;transition:border-color .18s,box-shadow .22s,transform .22s" style-hover="border-color:#1B4FD8;box-shadow:0 14px 32px rgba(11,27,43,0.12);transform:translateY(-8px)">
           <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#1B4FD8;margin-bottom:8px">HINJEWADI</div>
@@ -985,6 +1200,10 @@
         <details class="faq-item">
           <summary>Do you pick up laundry near me in Hinjewadi, Wakad or Baner?</summary>
           <p>Yes. Blue Wave is a doorstep laundry service for Hinjewadi, Wakad and Baner in Pune. Book a 2-hour pickup slot on WhatsApp at +91 70305 68910.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Where is Blue Wave Laundry in Hinjewadi?</summary>
+          <p>Shop no 22, The Groves, Blue Ridge Internal Road, Blue Ridge Phase 1, Rajiv Gandhi Infotech Park, Hinjawadi, Pune 411057. Near Dental Paradise Clinic. Open daily 9 AM–9 PM. <a href="https://maps.app.goo.gl/5MyKNxTNRqLStzet5" target="_blank" rel="noopener">Open in Google Maps</a>.</p>
         </details>
         <details class="faq-item">
           <summary>How much does laundry cost?</summary>
@@ -1042,6 +1261,7 @@
           <div style="font-size:12.5px;font-weight:700;letter-spacing:0.08em;color:#0B1B2B">CONTACT</div>
           <a href="{{ telHref }}" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">{{ phone }}</a>
           <a href="{{ waHref }}" target="_blank" rel="noopener" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">WhatsApp</a>
+          <a href="https://maps.app.goo.gl/5MyKNxTNRqLStzet5" target="_blank" rel="noopener" style="color:#6B7885;width:fit-content;transition:color .18s" style-hover="color:#1B4FD8">Shop 22, The Groves, Blue Ridge</a>
           <span>Mon–Sun, 9 AM–9 PM</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px">
@@ -1288,6 +1508,7 @@ class Component extends DCLogic {
 </script>
 <script src="./parallax.js" defer></script>
 <script src="./bubbles.js" defer></script>
+<script src="./loc-map.js" defer></script>
 <script>
 document.addEventListener("click", function (e) {
   var skin = e.target.closest && e.target.closest("#plans .bub > span");
